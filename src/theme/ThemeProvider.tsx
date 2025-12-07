@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, ThemeProvider as StyledThemeProvider } from 'styled-components'
+import { createGlobalStyle, ThemeProvider as StyledThemeProvider } from 'styled-components'
 import { theme, Theme } from './index'
 
 export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
@@ -68,7 +68,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   return (
     <StyledThemeProvider theme={theme}>
-      <GlobalStyles />
+      <GlobalStyles theme={theme} />
       {children}
     </StyledThemeProvider>
   )

@@ -12,6 +12,7 @@ export const theme = {
       black: '#000000',
       text: '#222222',
       gray: {
+        50: '#f9fafb',     // ← Add this missing color
         100: '#f8f9fa',
         200: '#e9ecef',
         300: '#dee2e6',
@@ -24,6 +25,7 @@ export const theme = {
       },
     },
   },
+  // ... rest of theme remains the same
   fonts: {
     primary: "'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
     heading: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
