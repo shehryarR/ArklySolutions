@@ -386,7 +386,7 @@ const HomePage: React.FC = () => {
         transition={{ duration: 1 }}
       >
         <Logo
-          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiM0Y2M5ZjAiLz4KPHB0aCBkPSJNMjAgMzBINjBMNTAgNTBIMzBMMjAgMzBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K"
+          src="/images/logo.png"
           alt="Arkly Solutions Logo"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
