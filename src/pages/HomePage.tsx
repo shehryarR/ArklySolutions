@@ -166,6 +166,101 @@ const FeatureDescription = styled.p`
   line-height: 1.6;
 `
 
+// New Testimonials Section
+const TestimonialsSection = styled(motion.section)`
+  background: ${({ theme }) => theme.colors.neutral.gray[50]};
+  padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[5]};
+  margin: ${({ theme }) => theme.spacing[20]} 0;
+`
+
+const TestimonialCard = styled(motion.div)`
+  background: ${({ theme }) => theme.colors.neutral.white};
+  padding: ${({ theme }) => theme.spacing[6]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  box-shadow: ${({ theme }) => theme.shadows.base};
+  border-left: 4px solid ${({ theme }) => theme.colors.primary.accent};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  text-align: center;
+
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    transform: translateY(-2px);
+  }
+`
+
+const TestimonialText = styled.p`
+  font-style: italic;
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  color: ${({ theme }) => theme.colors.neutral.gray[700]};
+  margin-bottom: ${({ theme }) => theme.spacing[3]};
+  line-height: 1.6;
+`
+
+const TestimonialAuthor = styled.div`
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  color: ${({ theme }) => theme.colors.primary.mid};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+`
+
+// New Preview Sections
+const PreviewSection = styled(motion.section)`
+  padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[5]};
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+`
+
+const PreviewGrid = styled(motion.div)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing[8]};
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: ${({ theme }) => theme.spacing[10]};
+`
+
+const PreviewCard = styled(motion.a)`
+  background: ${({ theme }) => theme.colors.neutral.white};
+  padding: ${({ theme }) => theme.spacing[6]};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  box-shadow: ${({ theme }) => theme.shadows.base};
+  text-decoration: none;
+  display: block;
+  transition: all ${({ theme }) => theme.transitions.default};
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: ${({ theme }) => theme.shadows.lg};
+    border-color: ${({ theme }) => theme.colors.primary.accent};
+  }
+`
+
+const PreviewIcon = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes['3xl']};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+`
+
+const PreviewTitle = styled.h3`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.primary.dark};
+  margin-bottom: ${({ theme }) => theme.spacing[3]};
+  font-family: ${({ theme }) => theme.fonts.heading};
+`
+
+const PreviewDescription = styled.p`
+  color: ${({ theme }) => theme.colors.neutral.gray[600]};
+  line-height: 1.6;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+`
+
+const PreviewButton = styled.span`
+  color: ${({ theme }) => theme.colors.primary.accent};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`
+
 const CTASection = styled(motion.section)`
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary.dark}, ${({ theme }) => theme.colors.primary.mid});
   color: ${({ theme }) => theme.colors.neutral.white};
@@ -247,6 +342,41 @@ const features = [
   }
 ]
 
+const testimonials = [
+  {
+    text: "Arkly completely transformed our internal workflow. We saved over 20 hours a week thanks to their automation tools.",
+    author: "Operations Director, Distribution Company"
+  },
+  {
+    text: "Our books have never been this clean. Monthly reporting is automated and accurate.",
+    author: "Small Business Owner"
+  }
+]
+
+const previews = [
+  {
+    icon: "🛠️",
+    title: "Our Services",
+    description: "Discover our complete range of software development, automation, and financial solutions.",
+    link: "/services",
+    cta: "View All Services"
+  },
+  {
+    icon: "🏢",
+    title: "About Us",
+    description: "Learn about our team, values, and commitment to transforming businesses through technology.",
+    link: "/about",
+    cta: "Our Story"
+  },
+  {
+    icon: "📞",
+    title: "Get Started",
+    description: "Ready to transform your business? Let's discuss your project and how we can help.",
+    link: "/contact",
+    cta: "Contact Us"
+  }
+]
+
 const HomePage: React.FC = () => {
   return (
     <PageLayout currentPage="home">
@@ -256,7 +386,7 @@ const HomePage: React.FC = () => {
         transition={{ duration: 1 }}
       >
         <Logo
-          src="/images/logo.png"
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiM0Y2M5ZjAiLz4KPHB0aCBkPSJNMjAgMzBINjBMNTAgNTBIMzBMMjAgMzBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K"
           alt="Arkly Solutions Logo"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -311,6 +441,59 @@ const HomePage: React.FC = () => {
           ))}
         </FeatureGrid>
       </Section>
+
+      <TestimonialsSection
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
+          <SectionTitle {...fadeInUp}>What Clients Say</SectionTitle>
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard
+              key={index}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+            >
+              <TestimonialText>"{testimonial.text}"</TestimonialText>
+              <TestimonialAuthor>— {testimonial.author}</TestimonialAuthor>
+            </TestimonialCard>
+          ))}
+        </div>
+      </TestimonialsSection>
+
+      <PreviewSection
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <SectionTitle {...fadeInUp}>Explore More</SectionTitle>
+        <PreviewGrid
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {previews.map((preview, index) => (
+            <PreviewCard
+              key={index}
+              href={preview.link}
+              variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              <PreviewIcon>{preview.icon}</PreviewIcon>
+              <PreviewTitle>{preview.title}</PreviewTitle>
+              <PreviewDescription>{preview.description}</PreviewDescription>
+              <PreviewButton>{preview.cta} →</PreviewButton>
+            </PreviewCard>
+          ))}
+        </PreviewGrid>
+      </PreviewSection>
 
       <CTASection
         initial={{ opacity: 0 }}

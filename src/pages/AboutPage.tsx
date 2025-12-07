@@ -136,6 +136,83 @@ const ValueDescription = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.base};
 `
 
+const TestimonialsGrid = styled(motion.div)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing[6]};
+  grid-template-columns: 1fr;
+  max-width: 900px;
+  margin: 0 auto;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing[8]};
+  }
+`
+
+const TestimonialCard = styled(motion.div)`
+  background: ${({ theme }) => theme.colors.neutral.white};
+  padding: ${({ theme }) => theme.spacing[8]};
+  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  border-left: 5px solid ${({ theme }) => theme.colors.primary.accent};
+  position: relative;
+  transition: all ${({ theme }) => theme.transitions.default};
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+    border-left-color: ${({ theme }) => theme.colors.primary.accent2};
+  }
+
+  &:nth-child(2) {
+    border-left-color: ${({ theme }) => theme.colors.primary.accent2};
+    
+    &:hover {
+      border-left-color: ${({ theme }) => theme.colors.primary.accent};
+    }
+  }
+
+  &:nth-child(3) {
+    border-left-color: ${({ theme }) => theme.colors.primary.dark};
+    
+    &:hover {
+      border-left-color: ${({ theme }) => theme.colors.primary.accent};
+    }
+  }
+`
+
+const TestimonialIcon = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  opacity: 0.7;
+`
+
+const TestimonialText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: 1.7;
+  color: ${({ theme }) => theme.colors.neutral.gray[700]};
+  margin-bottom: ${({ theme }) => theme.spacing[5]};
+  font-style: italic;
+  position: relative;
+
+  &::before {
+    content: '"';
+    font-size: ${({ theme }) => theme.fontSizes['4xl']};
+    color: ${({ theme }) => theme.colors.primary.accent};
+    position: absolute;
+    left: -25px;
+    top: -15px;
+    font-family: serif;
+    opacity: 0.3;
+  }
+`
+
+const TestimonialAuthor = styled.div`
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  color: ${({ theme }) => theme.colors.primary.mid};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+`
+
 const TeamSection = styled(motion.section)`
   background: ${({ theme }) => theme.colors.neutral.gray[50]};
   padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[5]};
@@ -275,6 +352,21 @@ const values = [
   }
 ]
 
+const testimonialsData = [
+  {
+    text: "Arkly completely transformed our internal workflow. We saved over 20 hours a week thanks to the custom automation tools they built.",
+    author: "Operations Director, Distribution Company"
+  },
+  {
+    text: "Our books have never been this clean. Monthly reporting is automated and accurate. Highly recommend.",
+    author: "Small Business Owner"
+  },
+  {
+    text: "Their dashboards make it incredibly easy to understand our financials and performance. Game changer for our team.",
+    author: "CEO, Service Company"
+  }
+]
+
 const stats = [
   { number: "50+", label: "Projects Delivered" },
   { number: "98%", label: "Client Satisfaction" },
@@ -351,6 +443,29 @@ const AboutPage: React.FC = () => {
             </ValueCard>
           ))}
         </ValuesGrid>
+      </Section>
+
+      <Section>
+        <SectionTitle {...fadeInUp}>What Clients Say</SectionTitle>
+        <TestimonialsGrid
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {testimonialsData.map((testimonial, index) => (
+            <TestimonialCard
+              key={index}
+              variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              <TestimonialIcon>💬</TestimonialIcon>
+              <TestimonialText>"{testimonial.text}"</TestimonialText>
+              <TestimonialAuthor>— {testimonial.author}</TestimonialAuthor>
+            </TestimonialCard>
+          ))}
+        </TestimonialsGrid>
       </Section>
 
       <TeamSection
