@@ -1,45 +1,46 @@
 export const theme = {
   colors: {
     primary: {
-      dark: '#1a2332',       // Rich blue-gray
-      mid: '#2a93c7',        // Logo blue
-      accent: '#2a93c7',     // Logo blue
-      accent2: '#3ca8a7',    // Logo teal
-      light: '#f8fafc',      // Clean white-blue
-      surface: '#ffffff',    // Pure white
+      dark: '#1a2332',       // Rich blue-gray (keep for text)
+      mid: '#2a93c7',        // Logo blue (main brand color)
+      accent: '#2a93c7',     // Logo blue (consistent branding)
+      accent2: '#3ca8a7',    // Logo teal (subtle accent)
+      light: '#ffffff',      // Pure white instead of blue-tinted
+      surface: '#ffffff',    // Pure white surfaces
     },
     neutral: {
       white: '#ffffff',
       black: '#000000',
       text: '#1a2332',       // Rich dark text
       gray: {
-        50: '#f8fafc',
-        100: '#f1f5f9',
-        200: '#e2e8f0',
-        300: '#cbd5e1',
-        400: '#94a3b8',
-        500: '#64748b',
-        600: '#475569',
-        700: '#334155',
-        800: '#1e293b',
-        900: '#1a2332',
+        50: '#ffffff',       // Pure white instead of tinted
+        100: '#f8fafc',      // Very light gray
+        200: '#f1f5f9',      // Light gray for borders
+        300: '#e2e8f0',      // Medium light gray
+        400: '#94a3b8',      // Medium gray
+        500: '#64748b',      // Balanced gray
+        600: '#475569',      // Dark gray for secondary text
+        700: '#334155',      // Darker gray
+        800: '#1e293b',      // Very dark gray
+        900: '#1a2332',      // Darkest (matches primary.dark)
       },
     },
     accent: {
-      blue: '#2a93c7',
-      indigo: '#3ca8a7',
-      purple: '#6fc760',
-      pink: '#ec4899',
-      emerald: '#6fc760',
-      amber: '#f59e0b',
-      orange: '#f97316',
-      red: '#ef4444',
+      blue: '#2a93c7',       // Your main brand blue
+      indigo: '#3ca8a7',     // Your brand teal
+      purple: '#8b5cf6',     // Modern purple
+      pink: '#ec4899',       // Modern pink
+      emerald: '#10b981',    // Modern green
+      amber: '#f59e0b',      // Modern amber
+      orange: '#f97316',     // Modern orange
+      red: '#ef4444',        // Modern red
     },
     gradients: {
-      primary: 'linear-gradient(135deg, #2a93c7 0%, #3ca8a7 50%, #6fc760 100%)',
-      accent: 'linear-gradient(135deg, #2a93c7 0%, #3ca8a7 100%)',
-      surface: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-      hero: 'linear-gradient(135deg, #1a2332 0%, #2a93c7 50%, #3ca8a7 100%)',
+      primary: 'linear-gradient(135deg, #2a93c7 0%, #3ca8a7 100%)',           // Clean brand gradient
+      accent: 'linear-gradient(135deg, #2a93c7 0%, #3ca8a7 100%)',            // Same as primary
+      surface: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',           // Very subtle surface gradient
+      hero: 'linear-gradient(135deg, #1a2332 0%, #2a93c7 50%, #3ca8a7 100%)', // Dark dramatic hero gradient
+      cta: 'linear-gradient(135deg, #2a93c7 0%, #1e7ba8 100%)',              // Darker but cleaner CTA
     }
   },
   fonts: {

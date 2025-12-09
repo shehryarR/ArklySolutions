@@ -30,27 +30,34 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     font-family: ${({ theme }) => theme.fonts.primary};
     line-height: 1.6;
     color: ${({ theme }) => theme.colors.neutral.text};
-    background-color: ${({ theme }) => theme.colors.primary.light};
+    background-color: ${({ theme }) => theme.colors.primary.light}; // Pure white background
     font-weight: ${({ theme }) => theme.fontWeights.normal};
     overflow-x: hidden;
   }
 
-  /* Typography Improvements */
+  /* Typography Improvements - cleaner hierarchy */
   h1, h2, h3, h4, h5, h6 {
     font-family: ${({ theme }) => theme.fonts.heading};
     line-height: 1.2;
     font-weight: ${({ theme }) => theme.fontWeights.bold};
     letter-spacing: -0.025em;
+    color: ${({ theme }) => theme.colors.neutral.text}; // Consistent text color
   }
 
   p {
     line-height: 1.7;
     font-feature-settings: "kern" 1;
+    color: ${({ theme }) => theme.colors.neutral.text};
   }
 
   a {
     text-decoration: none;
     color: inherit;
+    transition: color ${({ theme }) => theme.transitions.fast};
+  }
+
+  a:hover {
+    color: ${({ theme }) => theme.colors.primary.accent};
   }
 
   button {
@@ -58,6 +65,7 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     background: none;
     cursor: pointer;
     font-family: inherit;
+    transition: all ${({ theme }) => theme.transitions.default};
   }
 
   ul, ol {
@@ -70,26 +78,26 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     display: block;
   }
 
-  /* Modern scrollbar */
+  /* Modern minimal scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px; // Thinner scrollbar
   }
 
   ::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.neutral.gray[100]};
+    background: transparent; // No track background
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.primary.accent};
+    background: ${({ theme }) => theme.colors.neutral.gray[300]}; // Light gray thumb
     border-radius: ${({ theme }) => theme.borderRadius.full};
     transition: all ${({ theme }) => theme.transitions.default};
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.primary.accent2};
+    background: ${({ theme }) => theme.colors.primary.accent}; // Brand color on hover
   }
 
-  /* Selection */
+  /* Clean selection */
   ::selection {
     background-color: ${({ theme }) => theme.colors.primary.accent};
     color: ${({ theme }) => theme.colors.neutral.white};
@@ -100,7 +108,7 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     color: ${({ theme }) => theme.colors.neutral.white};
   }
 
-  /* Focus styles */
+  /* Modern focus styles */
   :focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.primary.accent};
     outline-offset: 2px;
@@ -127,13 +135,6 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     }
   }
 
-  /* Dark mode support (future enhancement) */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      color-scheme: dark;
-    }
-  }
-
   /* Utility classes */
   .sr-only {
     position: absolute;
@@ -147,15 +148,15 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     border: 0;
   }
 
-  /* Smooth animations */
+  /* Clean animations - less bouncy, more smooth */
   .animate-in {
-    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: fadeInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   @keyframes fadeInUp {
     0% {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(10px); // Less dramatic movement
     }
     100% {
       opacity: 1;
@@ -163,31 +164,102 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     }
   }
 
-  @keyframes shimmer {
+  @keyframes slideIn {
     0% {
-      transform: translateX(-100%);
+      opacity: 0;
+      transform: translateX(-10px);
     }
     100% {
-      transform: translateX(100%);
+      opacity: 1;
+      transform: translateX(0);
     }
   }
 
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
+  @keyframes scaleIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
     }
-    50% {
-      transform: translateY(-10px);
+    100% {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(42, 147, 199, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 30px rgba(42, 147, 199, 0.5);
-    }
+  /* Subtle hover effects */
+  .hover-lift {
+    transition: transform ${({ theme }) => theme.transitions.fast};
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Modern card styles */
+  .card {
+    background: ${({ theme }) => theme.colors.primary.surface};
+    border-radius: ${({ theme }) => theme.borderRadius.lg};
+    border: 1px solid ${({ theme }) => theme.colors.neutral.gray[200]};
+    transition: all ${({ theme }) => theme.transitions.default};
+  }
+
+  .card:hover {
+    border-color: ${({ theme }) => theme.colors.neutral.gray[300]};
+    box-shadow: ${({ theme }) => theme.shadows.md};
+  }
+
+  /* Button styles */
+  .btn-primary {
+    background: ${({ theme }) => theme.colors.primary.accent};
+    color: ${({ theme }) => theme.colors.neutral.white};
+    border: none;
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
+    font-weight: ${({ theme }) => theme.fontWeights.medium};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    cursor: pointer;
+    transition: all ${({ theme }) => theme.transitions.default};
+    box-shadow: ${({ theme }) => theme.shadows.sm};
+  }
+
+  .btn-primary:hover {
+    background: #1e7ba8; // Darker shade on hover
+    transform: translateY(-1px);
+    box-shadow: ${({ theme }) => theme.shadows.md};
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: ${({ theme }) => theme.colors.primary.accent};
+    border: 1px solid ${({ theme }) => theme.colors.neutral.gray[300]};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
+    font-weight: ${({ theme }) => theme.fontWeights.medium};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    cursor: pointer;
+    transition: all ${({ theme }) => theme.transitions.default};
+  }
+
+  .btn-secondary:hover {
+    background: ${({ theme }) => theme.colors.neutral.gray[50]};
+    border-color: ${({ theme }) => theme.colors.primary.accent};
+  }
+
+  /* Input styles */
+  .input {
+    background: ${({ theme }) => theme.colors.primary.surface};
+    border: 1px solid ${({ theme }) => theme.colors.neutral.gray[300]};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    color: ${({ theme }) => theme.colors.neutral.text};
+    transition: all ${({ theme }) => theme.transitions.default};
+  }
+
+  .input:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.primary.accent};
+    box-shadow: 0 0 0 3px rgba(42, 147, 199, 0.1);
   }
 `
 
