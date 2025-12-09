@@ -22,6 +22,18 @@ const HeroSection = styled(motion.section)`
                 radial-gradient(circle at 30% 80%, rgba(124, 58, 237, 0.2) 0%, transparent 50%);
     z-index: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[12]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[10]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
+  }
 `
 
 const HeroContainer = styled.div`
@@ -33,7 +45,7 @@ const HeroContainer = styled.div`
 `
 
 const HeroTitle = styled(motion.h1)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['6xl']});
+  font-size: clamp(2rem, 4vw, 3.75rem);
   font-weight: ${({ theme }) => theme.fontWeights.black};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-family: ${({ theme }) => theme.fonts.heading};
@@ -42,18 +54,22 @@ const HeroTitle = styled(motion.h1)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const HeroSubtitle = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   line-height: 1.6;
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;
   font-family: ${({ theme }) => theme.fonts.serif};
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: none;
   }
 `
 
@@ -61,6 +77,18 @@ const HeroSubtitle = styled(motion.p)`
 const StorySection = styled.section`
   padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.primary.surface};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const StoryContainer = styled.div`
@@ -74,6 +102,12 @@ const StoryContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr;
     gap: ${({ theme }) => theme.spacing[12]};
+    max-width: 800px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[8]};
+    max-width: none;
   }
 `
 
@@ -82,20 +116,25 @@ const StoryContent = styled(motion.div)`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     order: 2;
+    text-align: center;
   }
 `
 
 const StoryTitle = styled.h2`
-  font-size: clamp(${({ theme }) => theme.fontSizes['2xl']}, 3vw, ${({ theme }) => theme.fontSizes['4xl']});
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-family: ${({ theme }) => theme.fonts.heading};
   line-height: 1.3;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const StoryText = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.base};
   line-height: 1.8;
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
@@ -104,6 +143,12 @@ const StoryText = styled.p`
   &:last-of-type {
     margin-bottom: 0;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    line-height: 1.7;
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const StoryHighlight = styled.div`
@@ -111,12 +156,24 @@ const StoryHighlight = styled.div`
   color: ${({ theme }) => theme.colors.neutral.white};
   padding: ${({ theme }) => theme.spacing[8]};
   border-radius: ${({ theme }) => theme.borderRadius['2xl']};
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
   font-style: italic;
   text-align: center;
   margin-top: ${({ theme }) => theme.spacing[8]};
   font-family: ${({ theme }) => theme.fonts.serif};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    margin-top: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[4]};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    margin-top: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const StoryVisual = styled(motion.div)`
@@ -134,6 +191,19 @@ const StoryVisual = styled(motion.div)`
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     order: 1;
     min-height: 300px;
+    padding: ${({ theme }) => theme.spacing[10]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 250px;
+    padding: ${({ theme }) => theme.spacing[8]};
+    border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    min-height: 200px;
+    padding: ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
   }
 
   &::before {
@@ -165,12 +235,32 @@ const StoryIcon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes['9xl']};
   position: relative;
   z-index: 1;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes['6xl']};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes['5xl']};
+  }
 `
 
 // Values Section
 const ValuesSection = styled.section`
   padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.gradients.surface};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const ValuesContainer = styled.div`
@@ -181,30 +271,62 @@ const ValuesContainer = styled.div`
 const SectionHeader = styled.div`
   text-align: center;
   margin-bottom: ${({ theme }) => theme.spacing[20]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: ${({ theme }) => theme.spacing[16]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[12]};
+  }
 `
 
 const SectionTitle = styled(motion.h2)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['2xl']}, 3vw, ${({ theme }) => theme.fontSizes['5xl']});
+  font-size: clamp(1.875rem, 3vw, 3rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
   line-height: 1.2;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const SectionDescription = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: clamp(1rem, 2vw, 1.25rem);
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.7;
   font-family: ${({ theme }) => theme.fonts.serif};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: none;
+  }
 `
 
 const ValuesGrid = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: ${({ theme }) => theme.spacing[8]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    gap: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing[6]};
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[4]};
+    max-width: none;
+  }
 `
 
 const ValueCard = styled(motion.div)`
@@ -220,6 +342,24 @@ const ValueCard = styled(motion.div)`
     transform: translateY(-8px);
     box-shadow: ${({ theme }) => theme.shadows.xl};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[8]};
+    border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
 `
 
 const ValueIcon = styled.div`
@@ -233,26 +373,61 @@ const ValueIcon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes['3xl']};
   margin: 0 auto ${({ theme }) => theme.spacing[6]} auto;
   box-shadow: ${({ theme }) => theme.shadows.md};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 70px;
+    height: 70px;
+    font-size: ${({ theme }) => theme.fontSizes['2xl']};
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 60px;
+    height: 60px;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const ValueTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const ValueDescription = styled.p`
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   line-height: 1.7;
   font-size: ${({ theme }) => theme.fontSizes.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    line-height: 1.6;
+  }
 `
 
 // Testimonials Section
 const TestimonialsSection = styled.section`
   padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.primary.surface};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const TestimonialsContainer = styled.div`
@@ -265,6 +440,25 @@ const TestimonialGrid = styled(motion.div)`
   grid-template-columns: 1fr;
   gap: ${({ theme }) => theme.spacing[10]};
   margin-top: ${({ theme }) => theme.spacing[16]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    gap: ${({ theme }) => theme.spacing[8]};
+    margin-top: ${({ theme }) => theme.spacing[12]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[6]};
+    margin-top: ${({ theme }) => theme.spacing[10]};
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[4]};
+    margin-top: ${({ theme }) => theme.spacing[8]};
+    max-width: none;
+  }
 `
 
 const TestimonialCard = styled(motion.div)`
@@ -285,23 +479,54 @@ const TestimonialCard = styled(motion.div)`
     font-family: ${({ theme }) => theme.fonts.serif};
     line-height: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[8]};
+    border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+
+    &::before {
+      top: -15px;
+      left: ${({ theme }) => theme.spacing[8]};
+      font-size: ${({ theme }) => theme.fontSizes['6xl']};
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+
+    &::before {
+      top: -10px;
+      left: ${({ theme }) => theme.spacing[6]};
+      font-size: ${({ theme }) => theme.fontSizes['4xl']};
+    }
+  }
 `
 
 const TestimonialText = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.neutral.gray[700]};
   margin-bottom: ${({ theme }) => theme.spacing[8]};
   font-style: italic;
   font-family: ${({ theme }) => theme.fonts.serif};
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[6]};
+    line-height: 1.6;
+  }
 `
 
 const TestimonialAuthor = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
   color: ${({ theme }) => theme.colors.primary.mid};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.base};
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `
 
 // Stats Section
@@ -309,6 +534,18 @@ const StatsSection = styled.section`
   padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.gradients.primary};
   color: ${({ theme }) => theme.colors.neutral.white};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const StatsContainer = styled.div`
@@ -321,6 +558,21 @@ const StatsGrid = styled(motion.div)`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: ${({ theme }) => theme.spacing[8]};
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    gap: ${({ theme }) => theme.spacing[6]};
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const StatCard = styled(motion.div)`
@@ -329,21 +581,33 @@ const StatCard = styled(motion.div)`
   padding: ${({ theme }) => theme.spacing[8]};
   backdrop-filter: ${({ theme }) => theme.effects.backdropBlur};
   border: 1px solid rgba(255, 255, 255, 0.2);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[4]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+  }
 `
 
 const StatNumber = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes['5xl']};
+  font-size: clamp(2.25rem, 4vw, 3rem);
   font-weight: ${({ theme }) => theme.fontWeights.black};
   margin-bottom: ${({ theme }) => theme.spacing[2]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[1]};
+  }
 `
 
 const StatLabel = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   opacity: 0.9;
 `
-
 
 const staggerContainer = {
   animate: {

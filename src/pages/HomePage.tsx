@@ -12,6 +12,7 @@ const HeroSection = styled(motion.section)`
   justify-content: center;
   background: ${({ theme }) => theme.colors.gradients.hero};
   overflow: hidden;
+  padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[6]};
   
   &::before {
     content: '';
@@ -36,6 +37,16 @@ const HeroSection = styled(motion.section)`
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
     z-index: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 90vh;
+    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    min-height: 80vh;
+    padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const HeroContainer = styled.div`
@@ -46,10 +57,19 @@ const HeroContainer = styled.div`
   padding: 0 ${({ theme }) => theme.spacing[6]};
   text-align: center;
   color: ${({ theme }) => theme.colors.neutral.white};
+  width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 0 ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: 0 ${({ theme }) => theme.spacing[2]};
+  }
 `
 
 const HeroTitle = styled(motion.h1)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['4xl']}, 5vw, ${({ theme }) => theme.fontSizes['8xl']});
+  font-size: clamp(2.5rem, 5vw, 6rem);
   font-weight: ${({ theme }) => theme.fontWeights.black};
   line-height: 1.1;
   margin-bottom: ${({ theme }) => theme.spacing[6]};
@@ -59,10 +79,22 @@ const HeroTitle = styled(motion.h1)`
   background-clip: text;
   font-family: ${({ theme }) => theme.fonts.heading};
   letter-spacing: -0.02em;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+    line-height: 1.2;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+    br {
+      display: none;
+    }
+  }
 `
 
 const HeroSubtitle = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
   font-weight: ${({ theme }) => theme.fontWeights.normal};
   line-height: 1.6;
   margin-bottom: ${({ theme }) => theme.spacing[12]};
@@ -71,9 +103,15 @@ const HeroSubtitle = styled(motion.p)`
   margin-left: auto;
   margin-right: auto;
   font-family: ${({ theme }) => theme.fonts.serif};
-  
+
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+    margin-bottom: ${({ theme }) => theme.spacing[8]};
+    max-width: 600px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[6]};
+    max-width: none;
   }
 `
 
@@ -83,11 +121,24 @@ const HeroActions = styled(motion.div)`
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: ${({ theme }) => theme.spacing[16]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: ${({ theme }) => theme.spacing[12]};
+    gap: ${({ theme }) => theme.spacing[3]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    flex-direction: column;
+    align-items: center;
+    gap: ${({ theme }) => theme.spacing[3]};
+    margin-bottom: ${({ theme }) => theme.spacing[8]};
+  }
 `
 
 const PrimaryButton = styled(motion.a)`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: ${({ theme }) => theme.spacing[2]};
   padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
   background: ${({ theme }) => theme.colors.primary.accent};
@@ -100,6 +151,7 @@ const PrimaryButton = styled(motion.a)`
   box-shadow: ${({ theme }) => theme.shadows.lg};
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
 
   &::before {
     content: '';
@@ -121,11 +173,23 @@ const PrimaryButton = styled(motion.a)`
   &:hover::before {
     left: 100%;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
+    font-size: ${({ theme }) => theme.fontSizes.base};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 100%;
+    max-width: 280px;
+    padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[6]};
+  }
 `
 
 const SecondaryButton = styled(motion.a)`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: ${({ theme }) => theme.spacing[2]};
   padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
   background: rgba(255, 255, 255, 0.1);
@@ -137,11 +201,23 @@ const SecondaryButton = styled(motion.a)`
   text-decoration: none;
   transition: all ${({ theme }) => theme.transitions.default};
   backdrop-filter: ${({ theme }) => theme.effects.backdropBlur};
+  white-space: nowrap;
 
   &:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
+    font-size: ${({ theme }) => theme.fontSizes.base};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 100%;
+    max-width: 280px;
+    padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[6]};
   }
 `
 
@@ -153,9 +229,17 @@ const TrustIndicators = styled(motion.div)`
   gap: ${({ theme }) => theme.spacing[12]};
   flex-wrap: wrap;
   opacity: 0.7;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     gap: ${({ theme }) => theme.spacing[8]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[4]};
   }
 `
 
@@ -166,11 +250,23 @@ const TrustItem = styled.div`
   color: ${({ theme }) => theme.colors.neutral.white};
   font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
+  white-space: nowrap;
 
   svg {
     width: 16px;
     height: 16px;
     fill: ${({ theme }) => theme.colors.accent.emerald};
+    flex-shrink: 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    gap: ${({ theme }) => theme.spacing[1]};
+    
+    svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 `
 
@@ -180,6 +276,18 @@ const FeaturesSection = styled.section`
   padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.primary.surface};
   overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const FeaturesContainer = styled.div`
@@ -190,34 +298,62 @@ const FeaturesContainer = styled.div`
 const SectionHeader = styled.div`
   text-align: center;
   margin-bottom: ${({ theme }) => theme.spacing[20]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: ${({ theme }) => theme.spacing[16]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[12]};
+  }
 `
 
 const SectionTitle = styled(motion.h2)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['6xl']});
+  font-size: clamp(2rem, 4vw, 3.75rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
   line-height: 1.2;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const SectionDescription = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: clamp(1rem, 2vw, 1.25rem);
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.7;
   font-family: ${({ theme }) => theme.fonts.serif};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: none;
+  }
 `
 
 const FeaturesGrid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: ${({ theme }) => theme.spacing[8]};
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
     gap: ${({ theme }) => theme.spacing[6]};
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[4]};
+    max-width: none;
   }
 `
 
@@ -252,6 +388,24 @@ const FeatureCard = styled(motion.div)`
   &:hover::before {
     transform: translateX(0);
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[8]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[5]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+  }
 `
 
 const FeatureIcon = styled.div`
@@ -265,20 +419,43 @@ const FeatureIcon = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-size: ${({ theme }) => theme.fontSizes['2xl']};
   box-shadow: ${({ theme }) => theme.shadows.md};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 56px;
+    height: 56px;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 48px;
+    height: 48px;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const FeatureTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[3]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[2]};
+  }
 `
 
 const FeatureDescription = styled.p`
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   line-height: 1.7;
   font-size: ${({ theme }) => theme.fontSizes.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    line-height: 1.6;
+  }
 `
 
 // Testimonials Section
@@ -286,6 +463,18 @@ const TestimonialsSection = styled.section`
   padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.gradients.surface};
   position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const TestimonialsContainer = styled.div`
@@ -299,6 +488,24 @@ const TestimonialGrid = styled(motion.div)`
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: ${({ theme }) => theme.spacing[8]};
   margin-top: ${({ theme }) => theme.spacing[16]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    gap: ${({ theme }) => theme.spacing[6]};
+    margin-top: ${({ theme }) => theme.spacing[12]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing[6]};
+    max-width: 600px;
+    margin: ${({ theme }) => theme.spacing[12]} auto 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[4]};
+    margin-top: ${({ theme }) => theme.spacing[8]};
+    max-width: none;
+  }
 `
 
 const TestimonialCard = styled(motion.div)`
@@ -318,21 +525,50 @@ const TestimonialCard = styled(motion.div)`
     color: ${({ theme }) => theme.colors.primary.accent};
     font-family: ${({ theme }) => theme.fonts.serif};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+
+    &::before {
+      left: ${({ theme }) => theme.spacing[6]};
+      font-size: ${({ theme }) => theme.fontSizes['3xl']};
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[5]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+
+    &::before {
+      left: ${({ theme }) => theme.spacing[5]};
+      font-size: ${({ theme }) => theme.fontSizes['2xl']};
+    }
+  }
 `
 
 const TestimonialText = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.neutral.gray[700]};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-style: italic;
   font-family: ${({ theme }) => theme.fonts.serif};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+    line-height: 1.6;
+  }
 `
 
 const TestimonialAuthor = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
   color: ${({ theme }) => theme.colors.primary.mid};
   font-size: ${({ theme }) => theme.fontSizes.sm};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
 `
 
 // CTA Section
@@ -355,6 +591,18 @@ const CTASection = styled.section`
                 radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.3) 0%, transparent 50%);
     z-index: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const CTAContainer = styled.div`
@@ -365,18 +613,27 @@ const CTAContainer = styled.div`
 `
 
 const CTATitle = styled(motion.h2)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['5xl']});
+  font-size: clamp(1.875rem, 4vw, 3rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const CTADescription = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: clamp(1rem, 2vw, 1.25rem);
   line-height: 1.7;
   margin-bottom: ${({ theme }) => theme.spacing[10]};
   opacity: 0.9;
   font-family: ${({ theme }) => theme.fonts.serif};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[8]};
+    line-height: 1.6;
+  }
 `
 
 // Animation variants

@@ -20,6 +20,18 @@ const StyledFooter = styled.footer`
                 radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
     z-index: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[14]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[10]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const FooterContainer = styled.div`
@@ -40,15 +52,26 @@ const FooterTop = styled.div`
     gap: ${({ theme }) => theme.spacing[8]};
   }
   
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr 1fr;
+    gap: ${({ theme }) => theme.spacing[8]};
+    margin-bottom: ${({ theme }) => theme.spacing[10]};
+  }
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing[8]};
+    gap: ${({ theme }) => theme.spacing[6]};
+    margin-bottom: ${({ theme }) => theme.spacing[8]};
   }
 `
 
 const FooterSection = styled(motion.div)`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    text-align: center;
+  }
 `
 
 const Logo = styled.div`
@@ -56,6 +79,12 @@ const Logo = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    justify-content: center;
+    gap: ${({ theme }) => theme.spacing[2]};
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const LogoImage = styled.img`
@@ -64,6 +93,11 @@ const LogoImage = styled.img`
   object-fit: contain;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   box-shadow: ${({ theme }) => theme.shadows.sm};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 40px;
+    height: 40px;
+  }
 `
 
 const LogoText = styled.div`
@@ -71,6 +105,14 @@ const LogoText = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   font-size: ${({ theme }) => theme.fontSizes['2xl']};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+  }
 `
 
 const FooterDescription = styled.p`
@@ -79,6 +121,20 @@ const FooterDescription = styled.p`
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   max-width: 300px;
   font-size: ${({ theme }) => theme.fontSizes.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    max-width: none;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: none;
+    margin: 0 auto ${({ theme }) => theme.spacing[4]} auto;
+  }
 `
 
 const SectionTitle = styled.h4`
@@ -87,12 +143,29 @@ const SectionTitle = styled.h4`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[2]};
+  }
 `
 
 const FooterLinks = styled.ul`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[3]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[2]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[1]};
+  }
 `
 
 const FooterLink = styled.a`
@@ -122,12 +195,30 @@ const FooterLink = styled.a`
   &:hover::before {
     width: 4px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    &:hover {
+      transform: none;
+    }
+    
+    &::before {
+      display: none;
+    }
+  }
 `
 
 const ContactInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[3]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[2]};
+  }
 `
 
 const ContactItem = styled.div`
@@ -136,6 +227,15 @@ const ContactItem = styled.div`
   gap: ${({ theme }) => theme.spacing[3]};
   color: ${({ theme }) => theme.colors.neutral.gray[300]};
   font-size: ${({ theme }) => theme.fontSizes.sm};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    gap: ${({ theme }) => theme.spacing[2]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    justify-content: center;
+  }
 `
 
 const ContactIcon = styled.div`
@@ -148,6 +248,18 @@ const ContactIcon = styled.div`
   justify-content: center;
   font-size: ${({ theme }) => theme.fontSizes.base};
   flex-shrink: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 28px;
+    height: 28px;
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 24px;
+    height: 24px;
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
 `
 
 const FooterBottom = styled.div`
@@ -159,20 +271,41 @@ const FooterBottom = styled.div`
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing[4]};
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding-top: ${({ theme }) => theme.spacing[6]};
+    gap: ${({ theme }) => theme.spacing[3]};
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     flex-direction: column;
     text-align: center;
+    padding-top: ${({ theme }) => theme.spacing[4]};
+    gap: ${({ theme }) => theme.spacing[3]};
   }
 `
 
 const Copyright = styled.div`
   color: ${({ theme }) => theme.colors.neutral.gray[400]};
   font-size: ${({ theme }) => theme.fontSizes.sm};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    order: 2;
+  }
 `
 
 const SocialLinks = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing[4]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[3]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    order: 1;
+    gap: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const SocialLink = styled(motion.a)`
@@ -193,6 +326,22 @@ const SocialLink = styled(motion.a)`
     background: ${({ theme }) => theme.colors.primary.accent};
     transform: translateY(-2px);
     box-shadow: ${({ theme }) => theme.shadows.md};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 36px;
+    height: 36px;
+    font-size: ${({ theme }) => theme.fontSizes.base};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 36px;
+    height: 36px;
+    font-size: ${({ theme }) => theme.fontSizes.base};
+
+    &:hover {
+      transform: none;
+    }
   }
 `
 

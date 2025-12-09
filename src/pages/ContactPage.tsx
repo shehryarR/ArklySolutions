@@ -22,6 +22,18 @@ const HeroSection = styled(motion.section)`
                 radial-gradient(circle at 70% 80%, rgba(124, 58, 237, 0.2) 0%, transparent 50%);
     z-index: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[12]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[10]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
+  }
 `
 
 const HeroContainer = styled.div`
@@ -33,7 +45,7 @@ const HeroContainer = styled.div`
 `
 
 const HeroTitle = styled(motion.h1)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['6xl']});
+  font-size: clamp(2rem, 4vw, 3.75rem);
   font-weight: ${({ theme }) => theme.fontWeights.black};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-family: ${({ theme }) => theme.fonts.heading};
@@ -42,18 +54,22 @@ const HeroTitle = styled(motion.h1)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const HeroSubtitle = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   line-height: 1.6;
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;
   font-family: ${({ theme }) => theme.fonts.serif};
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: none;
   }
 `
 
@@ -61,6 +77,18 @@ const HeroSubtitle = styled(motion.p)`
 const ContactSection = styled.section`
   padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.primary.surface};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const ContactContainer = styled.div`
@@ -69,29 +97,53 @@ const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[16]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[12]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[8]};
+  }
 `
 
 // Full Width Header Section
 const FullWidthHeader = styled(motion.div)`
   text-align: center;
   margin-bottom: ${({ theme }) => theme.spacing[8]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const InfoTitle = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes['4xl']};
+  font-size: clamp(1.875rem, 4vw, 2.25rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const InfoDescription = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: clamp(1rem, 2vw, 1.25rem);
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   max-width: 800px;
   margin: 0 auto;
   font-family: ${({ theme }) => theme.fonts.serif};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: none;
+  }
 `
 
 // Two Column Layout for Contact Cards and Form
@@ -104,6 +156,10 @@ const TwoColumnSection = styled.div`
     grid-template-columns: 1fr;
     gap: ${({ theme }) => theme.spacing[12]};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[8]};
+  }
 `
 
 // Contact Info Side
@@ -111,6 +167,18 @@ const ContactInfo = styled(motion.div)`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[6]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    order: 2;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const ContactCard = styled(motion.div)`
@@ -129,6 +197,23 @@ const ContactCard = styled(motion.div)`
     box-shadow: ${({ theme }) => theme.shadows.md};
     border-color: ${({ theme }) => theme.colors.primary.accent};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    flex-direction: column;
+    text-align: center;
+    gap: ${({ theme }) => theme.spacing[3]};
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[4]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+    gap: ${({ theme }) => theme.spacing[2]};
+  }
 `
 
 const ContactIcon = styled.div`
@@ -142,6 +227,18 @@ const ContactIcon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes['2xl']};
   flex-shrink: 0;
   box-shadow: ${({ theme }) => theme.shadows.sm};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 56px;
+    height: 56px;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 48px;
+    height: 48px;
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+  }
 `
 
 const ContactDetails = styled.div`
@@ -149,7 +246,7 @@ const ContactDetails = styled.div`
 `
 
 const ContactLabel = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[1]};
@@ -160,16 +257,26 @@ const ContactText = styled.p`
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   margin-bottom: ${({ theme }) => theme.spacing[2]};
   font-size: ${({ theme }) => theme.fontSizes.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    margin-bottom: ${({ theme }) => theme.spacing[1]};
+  }
 `
 
 const ContactLink = styled.a`
   color: ${({ theme }) => theme.colors.primary.accent};
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.base};
   transition: color ${({ theme }) => theme.transitions.default};
+  word-break: break-all;
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary.accent2};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `
 
@@ -180,26 +287,63 @@ const FormContainer = styled(motion.div)`
   padding: ${({ theme }) => theme.spacing[12]};
   box-shadow: ${({ theme }) => theme.shadows.lg};
   border: 1px solid ${({ theme }) => theme.colors.neutral.gray[200]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    order: 1;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[8]};
+    border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+  }
 `
 
 const FormTitle = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes['3xl']};
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[2]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[1]};
+    text-align: center;
+  }
 `
 
 const FormSubtitle = styled.p`
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   margin-bottom: ${({ theme }) => theme.spacing[8]};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+    text-align: center;
+  }
 `
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[6]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[5]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const FormRow = styled.div`
@@ -207,8 +351,13 @@ const FormRow = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: ${({ theme }) => theme.spacing[4]};
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[3]};
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing[3]};
   }
 `
 
@@ -216,6 +365,10 @@ const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing[2]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    gap: ${({ theme }) => theme.spacing[1]};
+  }
 `
 
 const FormLabel = styled.label`
@@ -224,6 +377,10 @@ const FormLabel = styled.label`
   color: ${({ theme }) => theme.colors.neutral.text};
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
 `
 
 const FormInput = styled.input`
@@ -244,6 +401,15 @@ const FormInput = styled.input`
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.neutral.gray[400]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[3]};
   }
 `
 
@@ -268,6 +434,17 @@ const FormTextarea = styled.textarea`
   &::placeholder {
     color: ${({ theme }) => theme.colors.neutral.gray[400]};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+    min-height: 120px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[3]};
+    min-height: 100px;
+  }
 `
 
 const SubmitButton = styled(motion.button)`
@@ -277,7 +454,7 @@ const SubmitButton = styled(motion.button)`
   border: none;
   border-radius: ${({ theme }) => theme.borderRadius['2xl']};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.base};
   cursor: pointer;
   transition: all ${({ theme }) => theme.transitions.default};
   box-shadow: ${({ theme }) => theme.shadows.md};
@@ -309,12 +486,30 @@ const SubmitButton = styled(motion.button)`
     cursor: not-allowed;
     transform: none;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 100%;
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 // Full Width Response Guarantee Section
 const FullWidthGuarantee = styled(motion.div)`
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing[16]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-top: ${({ theme }) => theme.spacing[12]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-top: ${({ theme }) => theme.spacing[8]};
+  }
 `
 
 const GuaranteeCard = styled(motion.div)`
@@ -325,21 +520,40 @@ const GuaranteeCard = styled(motion.div)`
   border: 2px solid ${({ theme }) => theme.colors.primary.accent};
   max-width: 800px;
   margin: 0 auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[6]} ${({ theme }) => theme.spacing[4]};
+    max-width: none;
+  }
 `
 
 const GuaranteeTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.primary.accent};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const GuaranteeText = styled.p`
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.base};
   margin: 0;
   line-height: 1.6;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    line-height: 1.5;
+  }
 `
 
 const staggerContainer = {

@@ -33,6 +33,18 @@ const HeroSection = styled(motion.section)`
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
     z-index: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[16]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[12]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
+  }
 `
 
 const HeroContainer = styled.div`
@@ -44,7 +56,7 @@ const HeroContainer = styled.div`
 `
 
 const HeroTitle = styled(motion.h1)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['6xl']});
+  font-size: clamp(2rem, 4vw, 3.75rem);
   font-weight: ${({ theme }) => theme.fontWeights.black};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-family: ${({ theme }) => theme.fonts.heading};
@@ -53,18 +65,22 @@ const HeroTitle = styled(motion.h1)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const HeroSubtitle = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   line-height: 1.6;
   opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;
   font-family: ${({ theme }) => theme.fonts.serif};
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: none;
   }
 `
 
@@ -72,6 +88,18 @@ const HeroSubtitle = styled(motion.p)`
 const ServicesSection = styled.section`
   padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.primary.surface};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const ServicesContainer = styled.div`
@@ -81,12 +109,25 @@ const ServicesContainer = styled.div`
 
 const ServicesGrid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: ${({ theme }) => theme.spacing[10]};
-  
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: ${({ theme }) => theme.spacing[8]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing[6]};
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing[8]};
+    gap: ${({ theme }) => theme.spacing[5]};
+    max-width: none;
   }
 `
 
@@ -125,13 +166,47 @@ const ServiceCard = styled(motion.article)`
   &:nth-child(even)::before {
     background: ${({ theme }) => theme.colors.gradients.primary};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[10]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[8]};
+    border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[6]};
+    border-radius: ${({ theme }) => theme.borderRadius.xl};
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
 `
 
 const ServiceHeader = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: ${({ theme }) => theme.spacing[4]};
   margin-bottom: ${({ theme }) => theme.spacing[6]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: ${({ theme }) => theme.spacing[3]};
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const ServiceIcon = styled.div`
@@ -145,19 +220,39 @@ const ServiceIcon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes['3xl']};
   box-shadow: ${({ theme }) => theme.shadows.md};
   flex-shrink: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 70px;
+    height: 70px;
+    font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 60px;
+    height: 60px;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+  }
 `
 
 const ServiceTitleGroup = styled.div`
   flex: 1;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    text-align: center;
+  }
 `
 
 const ServiceTitle = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.neutral.text};
   margin-bottom: ${({ theme }) => theme.spacing[2]};
   font-family: ${({ theme }) => theme.fonts.heading};
   line-height: 1.3;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[1]};
+  }
 `
 
 const ServiceBadge = styled.span`
@@ -170,13 +265,29 @@ const ServiceBadge = styled.span`
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[0.5]} ${({ theme }) => theme.spacing[2]};
+    font-size: 10px;
+  }
 `
 
 const ServiceDescription = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.base};
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
   margin-bottom: ${({ theme }) => theme.spacing[8]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    text-align: center;
+    margin-bottom: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    line-height: 1.6;
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const ServiceFeatures = styled.ul`
@@ -184,6 +295,16 @@ const ServiceFeatures = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: ${({ theme }) => theme.spacing[3]};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing[2]};
+    margin-bottom: ${({ theme }) => theme.spacing[6]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const ServiceFeature = styled.li`
@@ -202,17 +323,37 @@ const ServiceFeature = styled.li`
     flex-shrink: 0;
     margin-top: 2px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    gap: ${({ theme }) => theme.spacing[2]};
+
+    &::before {
+      font-size: ${({ theme }) => theme.fontSizes.base};
+    }
+  }
 `
 
 const ServiceActions = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing[4]};
   flex-wrap: wrap;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    justify-content: center;
+    gap: ${({ theme }) => theme.spacing[3]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing[2]};
+  }
 `
 
 const PrimaryButton = styled(motion.a)`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: ${({ theme }) => theme.spacing[2]};
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
   background: ${({ theme }) => theme.colors.primary.accent};
@@ -223,17 +364,25 @@ const PrimaryButton = styled(motion.a)`
   text-decoration: none;
   transition: all ${({ theme }) => theme.transitions.default};
   box-shadow: ${({ theme }) => theme.shadows.sm};
+  white-space: nowrap;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: ${({ theme }) => theme.shadows.md};
     background: ${({ theme }) => theme.colors.primary.accent2};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 100%;
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const SecondaryButton = styled(motion.a)`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: ${({ theme }) => theme.spacing[2]};
   padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
   background: transparent;
@@ -244,11 +393,18 @@ const SecondaryButton = styled(motion.a)`
   font-size: ${({ theme }) => theme.fontSizes.base};
   text-decoration: none;
   transition: all ${({ theme }) => theme.transitions.default};
+  white-space: nowrap;
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary.accent};
     color: ${({ theme }) => theme.colors.neutral.white};
     transform: translateY(-2px);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 100%;
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[4]};
   }
 `
 
@@ -272,6 +428,18 @@ const CTASection = styled.section`
                 radial-gradient(circle at 70% 60%, rgba(124, 58, 237, 0.3) 0%, transparent 50%);
     z-index: 1;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]};
+  }
 `
 
 const CTAContainer = styled.div`
@@ -282,20 +450,28 @@ const CTAContainer = styled.div`
 `
 
 const CTATitle = styled(motion.h2)`
-  font-size: clamp(${({ theme }) => theme.fontSizes['2xl']}, 3vw, ${({ theme }) => theme.fontSizes['4xl']});
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[3]};
+  }
 `
 
 const CTADescription = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: clamp(1rem, 2vw, 1.25rem);
   line-height: 1.6;
   margin-bottom: ${({ theme }) => theme.spacing[8]};
   opacity: 0.9;
   font-family: ${({ theme }) => theme.fonts.serif};
-`
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    margin-bottom: ${({ theme }) => theme.spacing[6]};
+    line-height: 1.5;
+  }
+`
 
 const staggerContainer = {
   animate: {
@@ -447,7 +623,7 @@ const ServicesPage: React.FC = () => {
               <ServiceCard
                 key={index}
                 variants={scaleIn}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.01 }}
               >
                 <ServiceHeader>
                   <ServiceIcon>
