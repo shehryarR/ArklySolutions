@@ -150,7 +150,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage = 'home' }) => {
             color: 'white',
             boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)'
           }}>A</div>
-          <LogoText>Arkly</LogoText>
+          <LogoText>Arkly Solutions</LogoText>
         </Logo>
 
         <NavLinks>
