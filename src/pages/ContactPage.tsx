@@ -66,6 +66,36 @@ const ContactSection = styled.section`
 const ContactContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing[16]};
+`
+
+// Full Width Header Section
+const FullWidthHeader = styled(motion.div)`
+  text-align: center;
+  margin-bottom: ${({ theme }) => theme.spacing[8]};
+`
+
+const InfoTitle = styled.h2`
+  font-size: ${({ theme }) => theme.fontSizes['4xl']};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.neutral.text};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  font-family: ${({ theme }) => theme.fonts.heading};
+`
+
+const InfoDescription = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  line-height: 1.7;
+  color: ${({ theme }) => theme.colors.neutral.gray[600]};
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: ${({ theme }) => theme.fonts.serif};
+`
+
+// Two Column Layout for Contact Cards and Form
+const TwoColumnSection = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: ${({ theme }) => theme.spacing[16]};
@@ -80,23 +110,7 @@ const ContactContainer = styled.div`
 const ContactInfo = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing[8]};
-`
-
-const InfoTitle = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes['3xl']};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  color: ${({ theme }) => theme.colors.neutral.text};
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-  font-family: ${({ theme }) => theme.fonts.heading};
-`
-
-const InfoDescription = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  line-height: 1.7;
-  color: ${({ theme }) => theme.colors.neutral.gray[600]};
-  margin-bottom: ${({ theme }) => theme.spacing[8]};
-  font-family: ${({ theme }) => theme.fonts.serif};
+  gap: ${({ theme }) => theme.spacing[6]};
 `
 
 const ContactCard = styled(motion.div)`
@@ -297,28 +311,35 @@ const SubmitButton = styled(motion.button)`
   }
 `
 
-// Response Guarantee
+// Full Width Response Guarantee Section
+const FullWidthGuarantee = styled(motion.div)`
+  width: 100%;
+  margin-top: ${({ theme }) => theme.spacing[16]};
+`
+
 const GuaranteeCard = styled(motion.div)`
   background: ${({ theme }) => theme.colors.gradients.surface};
   border-radius: ${({ theme }) => theme.borderRadius['2xl']};
-  padding: ${({ theme }) => theme.spacing[8]};
+  padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[8]};
   text-align: center;
   border: 2px solid ${({ theme }) => theme.colors.primary.accent};
-  margin-top: ${({ theme }) => theme.spacing[8]};
+  max-width: 800px;
+  margin: 0 auto;
 `
 
 const GuaranteeTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.primary.accent};
-  margin-bottom: ${({ theme }) => theme.spacing[2]};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
 `
 
 const GuaranteeText = styled.p`
   color: ${({ theme }) => theme.colors.neutral.gray[600]};
-  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   margin: 0;
+  line-height: 1.6;
 `
 
 const staggerContainer = {
@@ -432,143 +453,155 @@ const ContactPage: React.FC = () => {
 
       <ContactSection>
         <ContactContainer>
-          <ContactInfo
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
+          {/* Full Width Header Section */}
+          <FullWidthHeader
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <div>
-              <InfoTitle>Get In Touch</InfoTitle>
-              <InfoDescription>
-                Whether you're looking to streamline operations, build custom software, 
-                or need expert financial management, we're here to help turn your vision into reality.
-              </InfoDescription>
-            </div>
+            <InfoTitle>Get In Touch</InfoTitle>
+            <InfoDescription>
+              Whether you're looking to streamline operations, build custom software, 
+              or need expert financial management, we're here to help turn your vision into reality.
+            </InfoDescription>
+          </FullWidthHeader>
 
-            {contactData.map((contact, index) => (
-              <ContactCard
-                key={index}
-                variants={scaleIn}
-                whileHover={{ scale: 1.02 }}
-              >
-                <ContactIcon>{contact.icon}</ContactIcon>
-                <ContactDetails>
-                  <ContactLabel>{contact.label}</ContactLabel>
-                  <ContactText>{contact.text}</ContactText>
-                  {contact.href ? (
-                    <ContactLink href={contact.href}>{contact.link}</ContactLink>
-                  ) : (
-                    <ContactText style={{ fontWeight: 600, color: '#1a2332' }}>
-                      {contact.link}
-                    </ContactText>
-                  )}
-                </ContactDetails>
-              </ContactCard>
-            ))}
+          {/* Two Column Section: Contact Cards and Form */}
+          <TwoColumnSection>
+            <ContactInfo
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              {contactData.map((contact, index) => (
+                <ContactCard
+                  key={index}
+                  variants={scaleIn}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <ContactIcon>{contact.icon}</ContactIcon>
+                  <ContactDetails>
+                    <ContactLabel>{contact.label}</ContactLabel>
+                    <ContactText>{contact.text}</ContactText>
+                    {contact.href ? (
+                      <ContactLink href={contact.href}>{contact.link}</ContactLink>
+                    ) : (
+                      <ContactText style={{ fontWeight: 600, color: '#1a2332' }}>
+                        {contact.link}
+                      </ContactText>
+                    )}
+                  </ContactDetails>
+                </ContactCard>
+              ))}
+            </ContactInfo>
 
+            <FormContainer
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <FormTitle>Send Us a Message</FormTitle>
+              <FormSubtitle>Tell us about your project and we'll get back to you soon.</FormSubtitle>
+              
+              <Form onSubmit={handleSubmit}>
+                <FormRow>
+                  <FormGroup>
+                    <FormLabel htmlFor="name">Full Name *</FormLabel>
+                    <FormInput
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="Your full name"
+                      required
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <FormLabel htmlFor="email">Email Address *</FormLabel>
+                    <FormInput
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="your.email@company.com"
+                      required
+                    />
+                  </FormGroup>
+                </FormRow>
+
+                <FormRow>
+                  <FormGroup>
+                    <FormLabel htmlFor="company">Company Name</FormLabel>
+                    <FormInput
+                      type="text"
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
+                      placeholder="Your company name"
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <FormLabel htmlFor="subject">Subject *</FormLabel>
+                    <FormInput
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="What can we help you with?"
+                      required
+                    />
+                  </FormGroup>
+                </FormRow>
+
+                <FormGroup>
+                  <FormLabel htmlFor="message">Project Details *</FormLabel>
+                  <FormTextarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Tell us about your project, timeline, budget, and any specific requirements..."
+                    required
+                  />
+                </FormGroup>
+
+                <SubmitButton
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {!isSubmitting && <span style={{ marginLeft: '8px' }}>→</span>}
+                </SubmitButton>
+              </Form>
+            </FormContainer>
+          </TwoColumnSection>
+
+          {/* Full Width Guarantee Section */}
+          <FullWidthGuarantee>
             <GuaranteeCard
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
             >
               <GuaranteeTitle>⚡ 24-Hour Response Guarantee</GuaranteeTitle>
               <GuaranteeText>
                 We understand your time is valuable. Every inquiry receives a personalized response within 24 hours during business days.
               </GuaranteeText>
             </GuaranteeCard>
-          </ContactInfo>
-
-          <FormContainer
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <FormTitle>Send Us a Message</FormTitle>
-            <FormSubtitle>Tell us about your project and we'll get back to you soon.</FormSubtitle>
-            
-            <Form onSubmit={handleSubmit}>
-              <FormRow>
-                <FormGroup>
-                  <FormLabel htmlFor="name">Full Name *</FormLabel>
-                  <FormInput
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Your full name"
-                    required
-                  />
-                </FormGroup>
-
-                <FormGroup>
-                  <FormLabel htmlFor="email">Email Address *</FormLabel>
-                  <FormInput
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="your.email@company.com"
-                    required
-                  />
-                </FormGroup>
-              </FormRow>
-
-              <FormRow>
-                <FormGroup>
-                  <FormLabel htmlFor="company">Company Name</FormLabel>
-                  <FormInput
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    placeholder="Your company name"
-                  />
-                </FormGroup>
-
-                <FormGroup>
-                  <FormLabel htmlFor="subject">Subject *</FormLabel>
-                  <FormInput
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    placeholder="What can we help you with?"
-                    required
-                  />
-                </FormGroup>
-              </FormRow>
-
-              <FormGroup>
-                <FormLabel htmlFor="message">Project Details *</FormLabel>
-                <FormTextarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Tell us about your project, timeline, budget, and any specific requirements..."
-                  required
-                />
-              </FormGroup>
-
-              <SubmitButton
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-                {!isSubmitting && <span style={{ marginLeft: '8px' }}>→</span>}
-              </SubmitButton>
-            </Form>
-          </FormContainer>
+          </FullWidthGuarantee>
         </ContactContainer>
       </ContactSection>
     </PageLayout>
