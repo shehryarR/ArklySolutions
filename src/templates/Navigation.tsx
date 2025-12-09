@@ -25,6 +25,7 @@ const Logo = styled(motion.div)`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing[3]};
+  cursor: pointer;
 `
 
 const LogoImage = styled.img`
@@ -103,12 +104,15 @@ const NavLink = styled(motion.a)`
   }
 `
 
-
 interface NavigationProps {
   currentPage?: 'home' | 'services' | 'about' | 'contact'
 }
 
 const Navigation: React.FC<NavigationProps> = ({ currentPage = 'home' }) => {
+  const handleLogoClick = () => {
+    window.location.href = '/'
+  }
+
   return (
     <StyledNavigation
       initial={{ opacity: 0, y: -20 }}
@@ -119,6 +123,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPage = 'home' }) => {
         <Logo
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
+          onClick={handleLogoClick}
         >
           <LogoImage 
             src="/logo.svg" 
