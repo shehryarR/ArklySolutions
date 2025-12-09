@@ -1,17 +1,17 @@
 export const theme = {
   colors: {
     primary: {
-      dark: '#0a0e1a',       // Deep navy
-      mid: '#1a2332',        // Rich blue-gray
-      accent: '#2563eb',     // Professional blue
-      accent2: '#7c3aed',    // Premium purple
+      dark: '#1a2332',       // Rich blue-gray
+      mid: '#2a93c7',        // Logo blue
+      accent: '#2a93c7',     // Logo blue
+      accent2: '#3ca8a7',    // Logo teal
       light: '#f8fafc',      // Clean white-blue
       surface: '#ffffff',    // Pure white
     },
     neutral: {
       white: '#ffffff',
       black: '#000000',
-      text: '#0f172a',       // Rich dark text
+      text: '#1a2332',       // Rich dark text
       gray: {
         50: '#f8fafc',
         100: '#f1f5f9',
@@ -22,24 +22,24 @@ export const theme = {
         600: '#475569',
         700: '#334155',
         800: '#1e293b',
-        900: '#0f172a',
+        900: '#1a2332',
       },
     },
     accent: {
-      blue: '#3b82f6',
-      indigo: '#6366f1',
-      purple: '#8b5cf6',
+      blue: '#2a93c7',
+      indigo: '#3ca8a7',
+      purple: '#6fc760',
       pink: '#ec4899',
-      emerald: '#10b981',
+      emerald: '#6fc760',
       amber: '#f59e0b',
       orange: '#f97316',
       red: '#ef4444',
     },
     gradients: {
-      primary: 'linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%)',
-      accent: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+      primary: 'linear-gradient(135deg, #2a93c7 0%, #3ca8a7 50%, #6fc760 100%)',
+      accent: 'linear-gradient(135deg, #2a93c7 0%, #3ca8a7 100%)',
       surface: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-      hero: 'linear-gradient(135deg, #0a0e1a 0%, #1a2332 50%, #2563eb 100%)',
+      hero: 'linear-gradient(135deg, #1a2332 0%, #2a93c7 50%, #3ca8a7 100%)',
     }
   },
   fonts: {
@@ -132,8 +132,8 @@ export const theme = {
     xl: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
     '2xl': '0 50px 100px -20px rgba(0, 0, 0, 0.25)',
     inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
-    glow: '0 0 20px rgba(37, 99, 235, 0.25)',
-    'glow-lg': '0 0 60px rgba(37, 99, 235, 0.4)',
+    glow: '0 0 20px rgba(42, 147, 199, 0.25)',
+    'glow-lg': '0 0 60px rgba(42, 147, 199, 0.4)',
   },
   breakpoints: {
     xs: '475px',

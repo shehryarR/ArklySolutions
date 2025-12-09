@@ -183,10 +183,10 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
 
   @keyframes pulse-glow {
     0%, 100% {
-      box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 0 20px rgba(42, 147, 199, 0.3);
     }
     50% {
-      box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
+      box-shadow: 0 0 30px rgba(42, 147, 199, 0.5);
     }
   }
 `
