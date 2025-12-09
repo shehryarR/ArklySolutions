@@ -1,113 +1,185 @@
 export const theme = {
   colors: {
     primary: {
-      dark: '#0d1b2a',
-      mid: '#1b263b',
-      accent: '#4cc9f0',
-      accent2: '#e63946',
-      light: '#f5f9ff',
+      dark: '#0a0e1a',       // Deep navy
+      mid: '#1a2332',        // Rich blue-gray
+      accent: '#2563eb',     // Professional blue
+      accent2: '#7c3aed',    // Premium purple
+      light: '#f8fafc',      // Clean white-blue
+      surface: '#ffffff',    // Pure white
     },
     neutral: {
       white: '#ffffff',
       black: '#000000',
-      text: '#222222',
+      text: '#0f172a',       // Rich dark text
       gray: {
-        50: '#f9fafb',     // ← Add this missing color
-        100: '#f8f9fa',
-        200: '#e9ecef',
-        300: '#dee2e6',
-        400: '#ced4da',
-        500: '#adb5bd',
-        600: '#6c757d',
-        700: '#495057',
-        800: '#343a40',
-        900: '#212529',
+        50: '#f8fafc',
+        100: '#f1f5f9',
+        200: '#e2e8f0',
+        300: '#cbd5e1',
+        400: '#94a3b8',
+        500: '#64748b',
+        600: '#475569',
+        700: '#334155',
+        800: '#1e293b',
+        900: '#0f172a',
       },
     },
+    accent: {
+      blue: '#3b82f6',
+      indigo: '#6366f1',
+      purple: '#8b5cf6',
+      pink: '#ec4899',
+      emerald: '#10b981',
+      amber: '#f59e0b',
+      orange: '#f97316',
+      red: '#ef4444',
+    },
+    gradients: {
+      primary: 'linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%)',
+      accent: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+      surface: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+      hero: 'linear-gradient(135deg, #0a0e1a 0%, #1a2332 50%, #2563eb 100%)',
+    }
   },
-  // ... rest of theme remains the same
   fonts: {
-    primary: "'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-    heading: "'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+    primary: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+    heading: "'Clash Display', 'Clash Grotesk', 'Inter', system-ui, sans-serif",
+    mono: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+    serif: "'Crimson Pro', 'Source Serif Pro', Georgia, serif",
   },
   fontSizes: {
-    xs: '0.75rem',
-    sm: '0.875rem',
-    base: '1rem',
-    lg: '1.125rem',
-    xl: '1.25rem',
-    '2xl': '1.5rem',
-    '3xl': '1.875rem',
-    '4xl': '2.25rem',
-    '5xl': '3rem',
-    '6xl': '3.75rem',
+    xs: '0.75rem',     // 12px
+    sm: '0.875rem',    // 14px
+    base: '1rem',      // 16px
+    lg: '1.125rem',    // 18px
+    xl: '1.25rem',     // 20px
+    '2xl': '1.5rem',   // 24px
+    '3xl': '1.875rem', // 30px
+    '4xl': '2.25rem',  // 36px
+    '5xl': '3rem',     // 48px
+    '6xl': '3.75rem',  // 60px
+    '7xl': '4.5rem',   // 72px
+    '8xl': '6rem',     // 96px
+    '9xl': '8rem',     // 128px
   },
   fontWeights: {
+    thin: 100,
+    light: 300,
     normal: 400,
     medium: 500,
     semibold: 600,
     bold: 700,
     extrabold: 800,
+    black: 900,
   },
   spacing: {
+    px: '1px',
     0: '0',
-    1: '0.25rem',
-    2: '0.5rem',
-    3: '0.75rem',
-    4: '1rem',
-    5: '1.25rem',
-    6: '1.5rem',
-    8: '2rem',
-    10: '2.5rem',
-    12: '3rem',
-    16: '4rem',
-    20: '5rem',
-    24: '6rem',
-    32: '8rem',
-    40: '10rem',
-    48: '12rem',
-    56: '14rem',
-    64: '16rem',
+    0.5: '0.125rem',   // 2px
+    1: '0.25rem',      // 4px
+    1.5: '0.375rem',   // 6px
+    2: '0.5rem',       // 8px
+    2.5: '0.625rem',   // 10px
+    3: '0.75rem',      // 12px
+    3.5: '0.875rem',   // 14px
+    4: '1rem',         // 16px
+    5: '1.25rem',      // 20px
+    6: '1.5rem',       // 24px
+    7: '1.75rem',      // 28px
+    8: '2rem',         // 32px
+    9: '2.25rem',      // 36px
+    10: '2.5rem',      // 40px
+    11: '2.75rem',     // 44px
+    12: '3rem',        // 48px
+    14: '3.5rem',      // 56px
+    16: '4rem',        // 64px
+    20: '5rem',        // 80px
+    24: '6rem',        // 96px
+    28: '7rem',        // 112px
+    32: '8rem',        // 128px
+    36: '9rem',        // 144px
+    40: '10rem',       // 160px
+    44: '11rem',       // 176px
+    48: '12rem',       // 192px
+    52: '13rem',       // 208px
+    56: '14rem',       // 224px
+    60: '15rem',       // 240px
+    64: '16rem',       // 256px
+    72: '18rem',       // 288px
+    80: '20rem',       // 320px
+    96: '24rem',       // 384px
   },
   borderRadius: {
     none: '0',
-    sm: '0.125rem',
-    base: '0.25rem',
-    md: '0.375rem',
-    lg: '0.5rem',
-    xl: '0.75rem',
-    '2xl': '1rem',
-    '3xl': '1.5rem',
+    xs: '0.125rem',    // 2px
+    sm: '0.25rem',     // 4px
+    base: '0.375rem',  // 6px
+    md: '0.5rem',      // 8px
+    lg: '0.75rem',     // 12px
+    xl: '1rem',        // 16px
+    '2xl': '1.5rem',   // 24px
+    '3xl': '2rem',     // 32px
+    '4xl': '2.5rem',   // 40px
     full: '9999px',
   },
   shadows: {
-    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-    base: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-    md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-    xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-    '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    xs: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+    sm: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
+    base: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+    md: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+    lg: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+    xl: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    '2xl': '0 50px 100px -20px rgba(0, 0, 0, 0.25)',
+    inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
+    glow: '0 0 20px rgba(37, 99, 235, 0.25)',
+    'glow-lg': '0 0 60px rgba(37, 99, 235, 0.4)',
   },
   breakpoints: {
+    xs: '475px',
     sm: '640px',
     md: '768px',
     lg: '1024px',
     xl: '1280px',
     '2xl': '1536px',
+    '3xl': '1920px',
   },
   transitions: {
-    default: '0.3s ease',
-    fast: '0.15s ease',
-    slow: '0.6s ease',
+    fast: '0.15s cubic-bezier(0.4, 0, 0.2, 1)',
+    default: '0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    slow: '0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+    spring: '0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
   },
   zIndex: {
+    hide: -1,
+    auto: 'auto',
+    base: 0,
+    docked: 10,
     dropdown: 1000,
     sticky: 1020,
-    fixed: 1030,
-    modal: 1040,
-    popover: 1050,
-    tooltip: 1060,
+    banner: 1030,
+    overlay: 1040,
+    modal: 1050,
+    popover: 1060,
+    skipLink: 1070,
+    toast: 1080,
+    tooltip: 1090,
   },
+  effects: {
+    blur: {
+      none: '0',
+      sm: '4px',
+      base: '8px',
+      md: '12px',
+      lg: '16px',
+      xl: '24px',
+      '2xl': '40px',
+      '3xl': '64px',
+    },
+    backdropBlur: 'blur(8px) saturate(180%)',
+    glassBackground: 'rgba(255, 255, 255, 0.1)',
+    glassBorder: '1px solid rgba(255, 255, 255, 0.2)',
+  }
 } as const
 
 export type Theme = typeof theme

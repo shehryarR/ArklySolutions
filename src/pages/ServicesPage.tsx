@@ -1,70 +1,263 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { PageLayout } from '../templates'
 
-// Page-specific styled components
-const PageHeader = styled(motion.header)`
-  background: linear-gradient(120deg, ${({ theme }) => theme.colors.primary.dark}, ${({ theme }) => theme.colors.primary.mid});
+// Hero Section
+const HeroSection = styled(motion.section)`
+  position: relative;
+  padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]} ${({ theme }) => theme.spacing[20]};
+  background: ${({ theme }) => theme.colors.gradients.hero};
   color: ${({ theme }) => theme.colors.neutral.white};
-  padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[5]};
-  text-align: center;
+  overflow: hidden;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]};
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 60%);
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    z-index: 1;
   }
 `
 
-const PageTitle = styled(motion.h1)`
-  margin: 0 0 ${({ theme }) => theme.spacing[4]} 0;
-  font-size: ${({ theme }) => theme.fontSizes['4xl']};
-  font-weight: ${({ theme }) => theme.fontWeights.extrabold};
-  font-family: ${({ theme }) => theme.fonts.heading};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes['3xl']};
-  }
-`
-
-const PageSubtitle = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  opacity: 0.9;
-  max-width: 600px;
-  margin: 0 auto;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-  }
-`
-
-const Section = styled(motion.section)`
-  padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[5]};
+const HeroContainer = styled.div`
+  position: relative;
+  z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
+`
 
+const HeroTitle = styled(motion.h1)`
+  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['6xl']});
+  font-weight: ${({ theme }) => theme.fontWeights.black};
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  font-family: ${({ theme }) => theme.fonts.heading};
+  line-height: 1.2;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`
+
+const HeroSubtitle = styled(motion.p)`
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: ${({ theme }) => theme.fonts.serif};
+  
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]};
+    font-size: ${({ theme }) => theme.fontSizes.xl};
   }
+`
+
+// Services Section
+const ServicesSection = styled.section`
+  padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
+  background: ${({ theme }) => theme.colors.primary.surface};
+`
+
+const ServicesContainer = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
 `
 
 const ServicesGrid = styled(motion.div)`
   display: grid;
-  gap: ${({ theme }) => theme.spacing[8]};
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: ${({ theme }) => theme.spacing[10]};
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing[6]};
+    gap: ${({ theme }) => theme.spacing[8]};
   }
 `
 
-const ServiceCard = styled(motion.div)`
+const ServiceCard = styled(motion.article)`
   background: ${({ theme }) => theme.colors.neutral.white};
-  padding: ${({ theme }) => theme.spacing[10]};
-  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
-  box-shadow: ${({ theme }) => theme.shadows.md};
-  border-top: 5px solid ${({ theme }) => theme.colors.primary.accent};
+  border-radius: ${({ theme }) => theme.borderRadius['3xl']};
+  padding: ${({ theme }) => theme.spacing[12]};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+  border: 1px solid ${({ theme }) => theme.colors.neutral.gray[200]};
+  position: relative;
+  overflow: hidden;
   transition: all ${({ theme }) => theme.transitions.default};
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: ${({ theme }) => theme.colors.gradients.accent};
+    transform: translateX(-100%);
+    transition: transform ${({ theme }) => theme.transitions.default};
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+    border-color: ${({ theme }) => theme.colors.primary.accent};
+  }
+
+  &:hover::before {
+    transform: translateX(0);
+  }
+
+  &:nth-child(even)::before {
+    background: ${({ theme }) => theme.colors.gradients.primary};
+  }
+`
+
+const ServiceHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[4]};
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
+`
+
+const ServiceIcon = styled.div`
+  width: 80px;
+  height: 80px;
+  background: ${({ theme }) => theme.colors.gradients.accent};
+  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: ${({ theme }) => theme.fontSizes['3xl']};
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  flex-shrink: 0;
+`
+
+const ServiceTitleGroup = styled.div`
+  flex: 1;
+`
+
+const ServiceTitle = styled.h2`
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.neutral.text};
+  margin-bottom: ${({ theme }) => theme.spacing[2]};
+  font-family: ${({ theme }) => theme.fonts.heading};
+  line-height: 1.3;
+`
+
+const ServiceBadge = styled.span`
+  display: inline-block;
+  padding: ${({ theme }) => theme.spacing[1]} ${({ theme }) => theme.spacing[3]};
+  background: ${({ theme }) => theme.colors.neutral.gray[100]};
+  color: ${({ theme }) => theme.colors.primary.accent};
+  border-radius: ${({ theme }) => theme.borderRadius.full};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`
+
+const ServiceDescription = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: 1.7;
+  color: ${({ theme }) => theme.colors.neutral.gray[600]};
+  margin-bottom: ${({ theme }) => theme.spacing[8]};
+`
+
+const ServiceFeatures = styled.ul`
+  margin-bottom: ${({ theme }) => theme.spacing[8]};
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: ${({ theme }) => theme.spacing[3]};
+`
+
+const ServiceFeature = styled.li`
+  display: flex;
+  align-items: flex-start;
+  gap: ${({ theme }) => theme.spacing[3]};
+  color: ${({ theme }) => theme.colors.neutral.gray[700]};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  line-height: 1.5;
+  
+  &::before {
+    content: '✓';
+    color: ${({ theme }) => theme.colors.accent.emerald};
+    font-weight: ${({ theme }) => theme.fontWeights.bold};
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+`
+
+const ServiceActions = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing[4]};
+  flex-wrap: wrap;
+`
+
+const PrimaryButton = styled(motion.a)`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
+  background: ${({ theme }) => theme.colors.primary.accent};
+  color: ${({ theme }) => theme.colors.neutral.white};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  text-decoration: none;
+  transition: all ${({ theme }) => theme.transitions.default};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    background: ${({ theme }) => theme.colors.primary.accent2};
+  }
+`
+
+const SecondaryButton = styled(motion.a)`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
+  background: transparent;
+  color: ${({ theme }) => theme.colors.primary.accent};
+  border: 2px solid ${({ theme }) => theme.colors.primary.accent};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  text-decoration: none;
+  transition: all ${({ theme }) => theme.transitions.default};
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary.accent};
+    color: ${({ theme }) => theme.colors.neutral.white};
+    transform: translateY(-2px);
+  }
+`
+
+// CTA Section
+const CTASection = styled.section`
+  padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[6]};
+  background: ${({ theme }) => theme.colors.gradients.primary};
+  color: ${({ theme }) => theme.colors.neutral.white};
+  text-align: center;
   position: relative;
   overflow: hidden;
 
@@ -72,251 +265,273 @@ const ServiceCard = styled(motion.div)`
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(76, 201, 240, 0.1), transparent);
-    transition: left 0.6s ease;
-  }
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: ${({ theme }) => theme.shadows.xl};
-    border-top-color: ${({ theme }) => theme.colors.primary.accent2};
-  }
-
-  &:hover::before {
-    left: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(124, 58, 237, 0.3) 0%, transparent 50%);
+    z-index: 1;
   }
 `
 
-const ServiceIcon = styled(motion.img)`
-  width: 60px;
-  height: 60px;
-  margin-bottom: ${({ theme }) => theme.spacing[5]};
-  filter: drop-shadow(${({ theme }) => theme.shadows.md});
+const CTAContainer = styled.div`
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
 `
 
-const ServiceTitle = styled.h3`
-  margin-top: 0;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
-  color: ${({ theme }) => theme.colors.primary.mid};
+const CTATitle = styled(motion.h2)`
+  font-size: clamp(${({ theme }) => theme.fontSizes['2xl']}, 3vw, ${({ theme }) => theme.fontSizes['4xl']});
   font-weight: ${({ theme }) => theme.fontWeights.bold};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
 `
 
-const ServiceDescription = styled.p`
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
-  line-height: 1.7;
-  color: ${({ theme }) => theme.colors.neutral.gray[700]};
-  font-size: ${({ theme }) => theme.fontSizes.base};
+const CTADescription = styled(motion.p)`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  line-height: 1.6;
+  margin-bottom: ${({ theme }) => theme.spacing[8]};
+  opacity: 0.9;
+  font-family: ${({ theme }) => theme.fonts.serif};
 `
 
-const ServiceFeatures = styled.ul`
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
-
-  li {
-    margin-bottom: ${({ theme }) => theme.spacing[2]};
-    padding-left: ${({ theme }) => theme.spacing[6]};
-    position: relative;
-    color: ${({ theme }) => theme.colors.neutral.gray[600]};
-    line-height: 1.6;
-
-    &::before {
-      content: '✓';
-      color: ${({ theme }) => theme.colors.primary.accent};
-      position: absolute;
-      left: 0;
-      font-weight: ${({ theme }) => theme.fontWeights.bold};
-      font-size: ${({ theme }) => theme.fontSizes.lg};
-    }
-  }
-`
-
-const ServiceCTA = styled(motion.a)`
-  display: inline-block;
-  padding: ${({ theme }) => theme.spacing[3]} ${({ theme }) => theme.spacing[6]};
-  background: ${({ theme }) => theme.colors.primary.accent};
-  color: ${({ theme }) => theme.colors.neutral.white};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  transition: all ${({ theme }) => theme.transitions.default};
-  text-align: center;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.primary.accent2};
-    transform: translateY(-2px);
-  }
-`
-
-// Animation variants
-const fadeInUp = {
-  initial: { opacity: 0, y: 60 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: "easeOut" }
-}
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.15
     }
   }
+}
+
+const scaleIn = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
 }
 
 // Services data
 const servicesData = [
   {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/3f/OOjs_UI_icon_code.svg",
+    icon: "🚀",
     title: "Custom Software Development",
-    description: "We design and build modern, efficient applications tailored to your business. Whether you need an internal dashboard, a client‑facing platform, or automation tools, we create systems that scale as you grow.",
+    badge: "Most Popular",
+    description: "Enterprise-grade applications built with modern technologies, designed to scale with your business growth and integrate seamlessly with existing systems.",
     features: [
-      "Web Apps & Internal Tools",
-      "API Integrations",
-      "Database Architecture & Optimization", 
-      "Custom Dashboards & Reporting Systems",
-      "Process‑specific Automation Apps",
+      "Web Applications & SaaS Platforms",
+      "API Development & Integrations", 
+      "Database Architecture & Optimization",
+      "Custom Dashboards & Analytics",
       "Mobile App Development",
-      "Cloud Infrastructure Setup"
+      "Cloud Infrastructure & DevOps",
+      "Legacy System Modernization"
     ]
   },
   {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/3/33/OOjs_UI_icon_calculator.svg",
-    title: "Bookkeeping & Financial Management",
-    description: "Our bookkeeping services help business owners stay organized, compliant, and financially confident. We provide accurate books and automated reports so you always know where your business stands.",
+    icon: "📊",
+    title: "Financial Management & Analytics",
+    badge: "Essential",
+    description: "Comprehensive bookkeeping and financial intelligence solutions that provide crystal-clear insights into your business performance and growth opportunities.",
     features: [
       "Monthly Bookkeeping & Reconciliation",
-      "Accounts Payable / Accounts Receivable",
-      "Payroll Coordination",
-      "Cleanup & Catch‑Up Work",
-      "Custom Financial Dashboards",
+      "Automated Financial Reporting",
+      "Cash Flow Analysis & Forecasting",
       "Tax Preparation Support",
-      "Cash Flow Management"
+      "Custom Financial Dashboards",
+      "Budget Planning & Monitoring",
+      "Performance Metrics Tracking"
     ]
   },
   {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/9/99/OOjs_UI_icon_settings.svg",
+    icon: "⚡",
     title: "Process Automation",
-    description: "We help companies eliminate repetitive tasks by automating operations and workflows. Our automations reduce errors, free up time, and increase consistency across your entire organization.",
+    badge: "High ROI",
+    description: "Intelligent automation systems that eliminate manual work, reduce errors, and free up your team to focus on strategic initiatives that drive growth.",
     features: [
-      "Automated Email & Notification Workflows",
-      "Data Entry Automation",
-      "Report Generation Systems",
-      "CRM & Accounting Integrations",
-      "Inventory & Scheduling Tools",
+      "Workflow Automation Design",
+      "Data Entry & Processing Automation",
+      "Email & Notification Systems",
+      "CRM & ERP Integrations",
       "Document Management Automation",
+      "Inventory & Order Processing",
       "Customer Onboarding Workflows"
     ]
   },
   {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/4/47/OOjs_UI_icon_person.svg",
+    icon: "🎯",
     title: "Business & Technical Consulting",
-    description: "We provide clarity for founders and managers looking to streamline operations, modernize their systems, or improve profitability through strategic technology implementations.",
+    badge: "Strategic",
+    description: "Expert guidance for digital transformation, operational efficiency, and technology strategy to help you make informed decisions and avoid costly mistakes.",
     features: [
-      "Systems & Operations Audits",
       "Digital Transformation Strategy",
-      "Workflow Optimization",
-      "Tech Stack Planning",
-      "Business Process Documentation",
+      "Systems Architecture Review",
+      "Process Optimization Analysis",
+      "Technology Stack Assessment",
+      "Scalability Planning",
       "Performance Improvement Plans",
-      "Technology Roadmap Development"
+      "Vendor Selection & Management"
     ]
   },
   {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/2/2f/OOjs_UI_icon_network.svg",
+    icon: "📈",
     title: "Data & Analytics Solutions",
-    description: "Turn your raw data into clear insights. We build custom dashboards and analytics tools that help you make data‑driven decisions and track key performance indicators.",
+    badge: "Insights",
+    description: "Transform your raw data into actionable insights with custom analytics platforms, real-time dashboards, and predictive modeling capabilities.",
     features: [
-      "Performance & KPI Dashboards",
-      "Business Metrics Automation",
-      "Data Cleaning & Transformation",
-      "SQL Database Management",
-      "Real‑Time Reporting",
-      "Predictive Analytics",
-      "Data Visualization Tools"
+      "Business Intelligence Dashboards",
+      "Real-time Analytics Platforms",
+      "Data Warehouse Design",
+      "Predictive Analytics & ML",
+      "KPI Monitoring Systems",
+      "Data Visualization Tools",
+      "Custom Reporting Solutions"
     ]
   },
   {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/OOjs_UI_icon_lock.svg",
+    icon: "🔒",
     title: "Security & Compliance",
-    description: "Protect your systems, data, and financials with our small‑business‑friendly security and compliance solutions that meet industry standards.",
+    badge: "Protected",
+    description: "Enterprise-grade security solutions and compliance frameworks that protect your data, ensure regulatory adherence, and build customer trust.",
     features: [
-      "System Hardening & Access Control",
-      "Data Protection Practices",
-      "Password & Credential Management",
-      "Audit‑Ready Documentation",
+      "Security Assessment & Auditing",
       "Compliance Framework Implementation",
-      "Security Assessment & Monitoring",
-      "Backup & Disaster Recovery"
+      "Data Protection & Privacy",
+      "Access Control & Authentication",
+      "Backup & Disaster Recovery",
+      "Security Monitoring Systems",
+      "Incident Response Planning"
     ]
   }
 ]
 
 const ServicesPage: React.FC = () => {
+  const servicesRef = useRef(null)
+  const isInView = useInView(servicesRef, { once: true, margin: "-100px" })
+
   return (
     <PageLayout currentPage="services">
-      <PageHeader
+      <HeroSection
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1 }}
       >
-        <PageTitle
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          Our Services
-        </PageTitle>
-        <PageSubtitle
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          Comprehensive solutions designed to transform your business operations and drive sustainable growth
-        </PageSubtitle>
-      </PageHeader>
+        <HeroContainer>
+          <HeroTitle
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Comprehensive Business Solutions
+          </HeroTitle>
+          
+          <HeroSubtitle
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            From custom software development to financial management, 
+            we provide the expertise and technology your business needs to thrive.
+          </HeroSubtitle>
+        </HeroContainer>
+      </HeroSection>
 
-      <Section>
-        <ServicesGrid
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {servicesData.map((service, index) => (
-            <ServiceCard
-              key={index}
-              variants={fadeInUp}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ServiceIcon
-                src={service.icon}
-                alt={service.title}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              />
-              <ServiceTitle>{service.title}</ServiceTitle>
-              <ServiceDescription>{service.description}</ServiceDescription>
-              <ServiceFeatures>
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex}>{feature}</li>
-                ))}
-              </ServiceFeatures>
-              <ServiceCTA
-                href="/contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+      <ServicesSection ref={servicesRef}>
+        <ServicesContainer>
+          <ServicesGrid
+            variants={staggerContainer}
+            initial="initial"
+            animate={isInView ? "animate" : "initial"}
+          >
+            {servicesData.map((service, index) => (
+              <ServiceCard
+                key={index}
+                variants={scaleIn}
+                whileHover={{ scale: 1.02 }}
               >
-                Learn More
-              </ServiceCTA>
-            </ServiceCard>
-          ))}
-        </ServicesGrid>
-      </Section>
+                <ServiceHeader>
+                  <ServiceIcon>
+                    {service.icon}
+                  </ServiceIcon>
+                  <ServiceTitleGroup>
+                    <ServiceTitle>{service.title}</ServiceTitle>
+                    <ServiceBadge>{service.badge}</ServiceBadge>
+                  </ServiceTitleGroup>
+                </ServiceHeader>
+
+                <ServiceDescription>
+                  {service.description}
+                </ServiceDescription>
+
+                <ServiceFeatures>
+                  {service.features.map((feature, featureIndex) => (
+                    <ServiceFeature key={featureIndex}>
+                      {feature}
+                    </ServiceFeature>
+                  ))}
+                </ServiceFeatures>
+
+                <ServiceActions>
+                  <PrimaryButton
+                    href="/contact"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Get Quote
+                    <span>→</span>
+                  </PrimaryButton>
+                  <SecondaryButton
+                    href="/about"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Learn More
+                  </SecondaryButton>
+                </ServiceActions>
+              </ServiceCard>
+            ))}
+          </ServicesGrid>
+        </ServicesContainer>
+      </ServicesSection>
+
+      <CTASection>
+        <CTAContainer>
+          <CTATitle
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Ready to Transform Your Operations?
+          </CTATitle>
+          
+          <CTADescription
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Let's discuss your specific needs and create a custom solution that drives measurable results for your business.
+          </CTADescription>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <PrimaryButton
+              href="/contact"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{ background: 'rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)' }}
+            >
+              Start Your Project Today
+              <span>→</span>
+            </PrimaryButton>
+          </motion.div>
+        </CTAContainer>
+      </CTASection>
     </PageLayout>
   )
 }

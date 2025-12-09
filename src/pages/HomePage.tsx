@@ -1,15 +1,347 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import { PageLayout } from '../templates'
 
-// Page-specific styled components
-const Header = styled(motion.header)`
-  background: linear-gradient(120deg, ${({ theme }) => theme.colors.primary.dark}, ${({ theme }) => theme.colors.primary.mid});
-  color: ${({ theme }) => theme.colors.neutral.white};
-  padding: ${({ theme }) => theme.spacing[24]} ${({ theme }) => theme.spacing[5]};
-  text-align: center;
+// Modern Hero Section with gradient mesh background
+const HeroSection = styled(motion.section)`
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${({ theme }) => theme.colors.gradients.hero};
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(124, 58, 237, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+    z-index: 1;
+  }
+`
+
+const HeroContainer = styled.div`
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 ${({ theme }) => theme.spacing[6]};
+  text-align: center;
+  color: ${({ theme }) => theme.colors.neutral.white};
+`
+
+const HeroTitle = styled(motion.h1)`
+  font-size: clamp(${({ theme }) => theme.fontSizes['4xl']}, 5vw, ${({ theme }) => theme.fontSizes['8xl']});
+  font-weight: ${({ theme }) => theme.fontWeights.black};
+  line-height: 1.1;
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: ${({ theme }) => theme.fonts.heading};
+  letter-spacing: -0.02em;
+`
+
+const HeroSubtitle = styled(motion.p)`
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-weight: ${({ theme }) => theme.fontWeights.normal};
+  line-height: 1.6;
+  margin-bottom: ${({ theme }) => theme.spacing[12]};
+  opacity: 0.9;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: ${({ theme }) => theme.fonts.serif};
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+  }
+`
+
+const HeroActions = styled(motion.div)`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing[4]};
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: ${({ theme }) => theme.spacing[16]};
+`
+
+const PrimaryButton = styled(motion.a)`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
+  background: ${({ theme }) => theme.colors.primary.accent};
+  color: ${({ theme }) => theme.colors.neutral.white};
+  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  text-decoration: none;
+  transition: all ${({ theme }) => theme.transitions.default};
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+    background: ${({ theme }) => theme.colors.primary.accent2};
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+`
+
+const SecondaryButton = styled(motion.a)`
+  display: inline-flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
+  background: rgba(255, 255, 255, 0.1);
+  color: ${({ theme }) => theme.colors.neutral.white};
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  text-decoration: none;
+  transition: all ${({ theme }) => theme.transitions.default};
+  backdrop-filter: ${({ theme }) => theme.effects.backdropBlur};
+
+  &:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+`
+
+// Trust Indicators
+const TrustIndicators = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[12]};
+  flex-wrap: wrap;
+  opacity: 0.7;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing[8]};
+  }
+`
+
+const TrustItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+  color: ${({ theme }) => theme.colors.neutral.white};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: ${({ theme }) => theme.colors.accent.emerald};
+  }
+`
+
+// Features Section
+const FeaturesSection = styled.section`
+  position: relative;
+  padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
+  background: ${({ theme }) => theme.colors.primary.surface};
+  overflow: hidden;
+`
+
+const FeaturesContainer = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+`
+
+const SectionHeader = styled.div`
+  text-align: center;
+  margin-bottom: ${({ theme }) => theme.spacing[20]};
+`
+
+const SectionTitle = styled(motion.h2)`
+  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['6xl']});
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.neutral.text};
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  font-family: ${({ theme }) => theme.fonts.heading};
+  line-height: 1.2;
+`
+
+const SectionDescription = styled(motion.p)`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  color: ${({ theme }) => theme.colors.neutral.gray[600]};
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-family: ${({ theme }) => theme.fonts.serif};
+`
+
+const FeaturesGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: ${({ theme }) => theme.spacing[8]};
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing[6]};
+  }
+`
+
+const FeatureCard = styled(motion.div)`
+  background: ${({ theme }) => theme.colors.neutral.white};
+  border-radius: ${({ theme }) => theme.borderRadius['3xl']};
+  padding: ${({ theme }) => theme.spacing[10]};
+  box-shadow: ${({ theme }) => theme.shadows.sm};
+  border: 1px solid ${({ theme }) => theme.colors.neutral.gray[200]};
+  position: relative;
+  overflow: hidden;
+  transition: all ${({ theme }) => theme.transitions.default};
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: ${({ theme }) => theme.colors.gradients.accent};
+    transform: translateX(-100%);
+    transition: transform ${({ theme }) => theme.transitions.default};
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+    border-color: ${({ theme }) => theme.colors.primary.accent};
+  }
+
+  &:hover::before {
+    transform: translateX(0);
+  }
+`
+
+const FeatureIcon = styled.div`
+  width: 64px;
+  height: 64px;
+  background: ${({ theme }) => theme.colors.gradients.accent};
+  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  box-shadow: ${({ theme }) => theme.shadows.md};
+`
+
+const FeatureTitle = styled.h3`
+  font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  color: ${({ theme }) => theme.colors.neutral.text};
+  margin-bottom: ${({ theme }) => theme.spacing[3]};
+  font-family: ${({ theme }) => theme.fonts.heading};
+`
+
+const FeatureDescription = styled.p`
+  color: ${({ theme }) => theme.colors.neutral.gray[600]};
+  line-height: 1.7;
+  font-size: ${({ theme }) => theme.fontSizes.base};
+`
+
+// Testimonials Section
+const TestimonialsSection = styled.section`
+  padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
+  background: ${({ theme }) => theme.colors.gradients.surface};
+  position: relative;
+`
+
+const TestimonialsContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+`
+
+const TestimonialGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: ${({ theme }) => theme.spacing[8]};
+  margin-top: ${({ theme }) => theme.spacing[16]};
+`
+
+const TestimonialCard = styled(motion.div)`
+  background: ${({ theme }) => theme.colors.neutral.white};
+  border-radius: ${({ theme }) => theme.borderRadius['3xl']};
+  padding: ${({ theme }) => theme.spacing[8]};
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  position: relative;
+  border: 1px solid ${({ theme }) => theme.colors.neutral.gray[200]};
+
+  &::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: ${({ theme }) => theme.spacing[8]};
+    font-size: ${({ theme }) => theme.fontSizes['4xl']};
+    color: ${({ theme }) => theme.colors.primary.accent};
+    font-family: ${({ theme }) => theme.fonts.serif};
+  }
+`
+
+const TestimonialText = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: 1.7;
+  color: ${({ theme }) => theme.colors.neutral.gray[700]};
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  font-style: italic;
+  font-family: ${({ theme }) => theme.fonts.serif};
+`
+
+const TestimonialAuthor = styled.div`
+  font-weight: ${({ theme }) => theme.fontWeights.semibold};
+  color: ${({ theme }) => theme.colors.primary.mid};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+`
+
+// CTA Section
+const CTASection = styled.section`
+  position: relative;
+  padding: ${({ theme }) => theme.spacing[32]} ${({ theme }) => theme.spacing[6]};
+  background: ${({ theme }) => theme.colors.gradients.primary};
+  color: ${({ theme }) => theme.colors.neutral.white};
+  text-align: center;
   overflow: hidden;
 
   &::before {
@@ -19,512 +351,279 @@ const Header = styled(motion.header)`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(76, 201, 240, 0.1) 50%, transparent 70%);
-    animation: shimmer 3s ease-in-out infinite;
-  }
-
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[4]};
+    background: radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.3) 0%, transparent 50%);
+    z-index: 1;
   }
 `
 
-const Logo = styled(motion.img)`
-  height: 80px;
-  width: auto;
-  display: block;
-  margin: 0 auto ${({ theme }) => theme.spacing[3]} auto;
-  filter: drop-shadow(${({ theme }) => theme.shadows.lg});
-`
-
-const MainTitle = styled(motion.h1)`
-  margin: 0;
-  font-size: ${({ theme }) => theme.fontSizes['5xl']};
-  font-weight: ${({ theme }) => theme.fontWeights.extrabold};
-  letter-spacing: 1px;
-  font-family: ${({ theme }) => theme.fonts.heading};
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes['3xl']};
-  }
-`
-
-const Subtitle = styled(motion.p)`
-  margin-top: ${({ theme }) => theme.spacing[5]};
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  opacity: 0.9;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    margin-top: ${({ theme }) => theme.spacing[4]};
-  }
-`
-
-const Section = styled(motion.section)`
-  padding: ${({ theme }) => theme.spacing[20]} ${({ theme }) => theme.spacing[5]};
-  max-width: 1100px;
-  margin: 0 auto;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme }) => theme.spacing[12]} ${({ theme }) => theme.spacing[4]};
-  }
-`
-
-const SectionTitle = styled(motion.h2)`
-  text-align: center;
-  font-size: ${({ theme }) => theme.fontSizes['4xl']};
-  margin-bottom: ${({ theme }) => theme.spacing[10]};
-  color: ${({ theme }) => theme.colors.primary.dark};
-  font-weight: ${({ theme }) => theme.fontWeights.extrabold};
+const CTAContainer = styled.div`
   position: relative;
-  font-family: ${({ theme }) => theme.fonts.heading};
-
-  &::after {
-    content: '';
-    width: 70px;
-    height: 4px;
-    background: ${({ theme }) => theme.colors.primary.accent};
-    display: block;
-    margin: ${({ theme }) => theme.spacing[3]} auto 0 auto;
-    border-radius: ${({ theme }) => theme.borderRadius.base};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes['3xl']};
-    margin-bottom: ${({ theme }) => theme.spacing[8]};
-  }
-`
-
-const IntroText = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  line-height: 1.8;
-  text-align: center;
+  z-index: 2;
   max-width: 800px;
-  margin: 0 auto ${({ theme }) => theme.spacing[12]} auto;
-  color: ${({ theme }) => theme.colors.neutral.gray[700]};
-`
-
-const FeatureGrid = styled(motion.div)`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing[8]};
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  margin-bottom: ${({ theme }) => theme.spacing[16]};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing[6]};
-  }
-`
-
-const FeatureCard = styled(motion.div)`
-  background: ${({ theme }) => theme.colors.neutral.white};
-  padding: ${({ theme }) => theme.spacing[8]};
-  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
-  box-shadow: ${({ theme }) => theme.shadows.md};
-  border-top: 4px solid ${({ theme }) => theme.colors.primary.accent};
-  text-align: center;
-  transition: all ${({ theme }) => theme.transitions.default};
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: ${({ theme }) => theme.shadows.xl};
-    border-top-color: ${({ theme }) => theme.colors.primary.accent2};
-  }
-`
-
-const FeatureIcon = styled(motion.div)`
-  width: 60px;
-  height: 60px;
-  margin: 0 auto ${({ theme }) => theme.spacing[4]} auto;
-  background: ${({ theme }) => theme.colors.primary.accent};
-  border-radius: ${({ theme }) => theme.borderRadius.full};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
-  color: ${({ theme }) => theme.colors.neutral.white};
-`
-
-const FeatureTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin-bottom: ${({ theme }) => theme.spacing[3]};
-  color: ${({ theme }) => theme.colors.primary.dark};
-  font-family: ${({ theme }) => theme.fonts.heading};
-`
-
-const FeatureDescription = styled.p`
-  color: ${({ theme }) => theme.colors.neutral.gray[600]};
-  line-height: 1.6;
-`
-
-// New Testimonials Section
-const TestimonialsSection = styled(motion.section)`
-  background: ${({ theme }) => theme.colors.neutral.gray[50]};
-  padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[5]};
-  margin: ${({ theme }) => theme.spacing[20]} 0;
-`
-
-const TestimonialCard = styled(motion.div)`
-  background: ${({ theme }) => theme.colors.neutral.white};
-  padding: ${({ theme }) => theme.spacing[6]};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  box-shadow: ${({ theme }) => theme.shadows.base};
-  border-left: 4px solid ${({ theme }) => theme.colors.primary.accent};
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-  text-align: center;
-
-  &:hover {
-    box-shadow: ${({ theme }) => theme.shadows.md};
-    transform: translateY(-2px);
-  }
-`
-
-const TestimonialText = styled.p`
-  font-style: italic;
-  font-size: ${({ theme }) => theme.fontSizes.base};
-  color: ${({ theme }) => theme.colors.neutral.gray[700]};
-  margin-bottom: ${({ theme }) => theme.spacing[3]};
-  line-height: 1.6;
-`
-
-const TestimonialAuthor = styled.div`
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-  color: ${({ theme }) => theme.colors.primary.mid};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-`
-
-// New Preview Sections
-const PreviewSection = styled(motion.section)`
-  padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[5]};
-  max-width: 1100px;
   margin: 0 auto;
-  text-align: center;
-`
-
-const PreviewGrid = styled(motion.div)`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing[8]};
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  margin-top: ${({ theme }) => theme.spacing[10]};
-`
-
-const PreviewCard = styled(motion.a)`
-  background: ${({ theme }) => theme.colors.neutral.white};
-  padding: ${({ theme }) => theme.spacing[6]};
-  border-radius: ${({ theme }) => theme.borderRadius.xl};
-  box-shadow: ${({ theme }) => theme.shadows.base};
-  text-decoration: none;
-  display: block;
-  transition: all ${({ theme }) => theme.transitions.default};
-  border: 2px solid transparent;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: ${({ theme }) => theme.shadows.lg};
-    border-color: ${({ theme }) => theme.colors.primary.accent};
-  }
-`
-
-const PreviewIcon = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes['3xl']};
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-`
-
-const PreviewTitle = styled.h3`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  color: ${({ theme }) => theme.colors.primary.dark};
-  margin-bottom: ${({ theme }) => theme.spacing[3]};
-  font-family: ${({ theme }) => theme.fonts.heading};
-`
-
-const PreviewDescription = styled.p`
-  color: ${({ theme }) => theme.colors.neutral.gray[600]};
-  line-height: 1.6;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-`
-
-const PreviewButton = styled.span`
-  color: ${({ theme }) => theme.colors.primary.accent};
-  font-weight: ${({ theme }) => theme.fontWeights.semibold};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`
-
-const CTASection = styled(motion.section)`
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary.dark}, ${({ theme }) => theme.colors.primary.mid});
-  color: ${({ theme }) => theme.colors.neutral.white};
-  padding: ${({ theme }) => theme.spacing[16]} ${({ theme }) => theme.spacing[5]};
-  text-align: center;
-  margin-top: ${({ theme }) => theme.spacing[20]};
 `
 
 const CTATitle = styled(motion.h2)`
-  font-size: ${({ theme }) => theme.fontSizes['3xl']};
+  font-size: clamp(${({ theme }) => theme.fontSizes['3xl']}, 4vw, ${({ theme }) => theme.fontSizes['5xl']});
   font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
+  margin-bottom: ${({ theme }) => theme.spacing[6]};
   font-family: ${({ theme }) => theme.fonts.heading};
 `
 
-const CTAText = styled(motion.p)`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  margin-bottom: ${({ theme }) => theme.spacing[8]};
+const CTADescription = styled(motion.p)`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  line-height: 1.7;
+  margin-bottom: ${({ theme }) => theme.spacing[10]};
   opacity: 0.9;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-`
-
-const CTAButton = styled(motion.a)`
-  display: inline-block;
-  padding: ${({ theme }) => theme.spacing[4]} ${({ theme }) => theme.spacing[8]};
-  background: ${({ theme }) => theme.colors.primary.accent};
-  color: ${({ theme }) => theme.colors.neutral.white};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  transition: all ${({ theme }) => theme.transitions.default};
-  box-shadow: ${({ theme }) => theme.shadows.md};
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.primary.accent2};
-    transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.shadows.xl};
-  }
+  font-family: ${({ theme }) => theme.fonts.serif};
 `
 
 // Animation variants
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: "easeOut" }
+  transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
 }
 
 const staggerContainer = {
   animate: {
     transition: {
-      staggerChildren: 0.2
+      staggerChildren: 0.1
     }
   }
 }
 
-// Page data
+const scaleIn = {
+  initial: { opacity: 0, scale: 0.9 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
+}
+
+// Data
 const features = [
   {
-    icon: "💻",
-    title: "Custom Software Solutions",
-    description: "Tailored applications designed specifically for your business needs and workflows."
+    icon: "🚀",
+    title: "Custom Software Development",
+    description: "Enterprise-grade applications built with cutting-edge technologies, designed to scale with your business growth and evolving requirements."
   },
   {
     icon: "📊",
-    title: "Financial Management",
-    description: "Professional bookkeeping and financial reporting to keep your business on track."
+    title: "Financial Management & Analytics",
+    description: "Comprehensive bookkeeping, financial reporting, and business intelligence solutions that provide deep insights into your performance."
   },
   {
     icon: "⚡",
     title: "Process Automation",
-    description: "Streamline operations and eliminate repetitive tasks with intelligent automation."
+    description: "Intelligent automation systems that eliminate manual work, reduce errors, and free up your team to focus on strategic initiatives."
   },
   {
     icon: "🔒",
-    title: "Secure & Compliant",
-    description: "Enterprise-grade security and compliance standards for peace of mind."
+    title: "Security & Compliance",
+    description: "Bank-level security protocols and industry compliance frameworks to protect your data and ensure regulatory adherence."
   }
 ]
 
 const testimonials = [
   {
-    text: "Arkly completely transformed our internal workflow. We saved over 20 hours a week thanks to their automation tools.",
+    text: "Arkly transformed our entire workflow. The automation they built saved us 20+ hours weekly and improved our accuracy dramatically.",
     author: "Operations Director, Distribution Company"
   },
   {
-    text: "Our books have never been this clean. Monthly reporting is automated and accurate.",
-    author: "Small Business Owner"
-  }
-]
-
-const previews = [
-  {
-    icon: "🛠️",
-    title: "Our Services",
-    description: "Discover our complete range of software development, automation, and financial solutions.",
-    link: "/services",
-    cta: "View All Services"
-  },
-  {
-    icon: "🏢",
-    title: "About Us",
-    description: "Learn about our team, values, and commitment to transforming businesses through technology.",
-    link: "/about",
-    cta: "Our Story"
-  },
-  {
-    icon: "📞",
-    title: "Get Started",
-    description: "Ready to transform your business? Let's discuss your project and how we can help.",
-    link: "/contact",
-    cta: "Contact Us"
+    text: "Finally, our financials are crystal clear. The automated reporting and dashboards make decision-making effortless.",
+    author: "CEO, Service Company"
   }
 ]
 
 const HomePage: React.FC = () => {
+  const heroRef = useRef(null)
+  const { scrollY } = useScroll()
+  const y = useTransform(scrollY, [0, 500], [0, -150])
+  
+  const featuresRef = useRef(null)
+  const isInView = useInView(featuresRef, { once: true, margin: "-100px" })
+
   return (
     <PageLayout currentPage="home">
-      <Header
+      <HeroSection
+        ref={heroRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1.2 }}
       >
-        <Logo
-          src="/images/logo.png"
-          alt="Arkly Solutions Logo"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        />
-        <MainTitle
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          Arkly Solutions LLC
-        </MainTitle>
-        <Subtitle
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          Transforming businesses through innovative technology solutions and expert financial management
-        </Subtitle>
-      </Header>
-
-      <Section>
-        <SectionTitle {...fadeInUp}>Welcome to Arkly Solutions</SectionTitle>
-        <IntroText {...fadeInUp}>
-          We're your trusted partner for custom software development, financial management, and business automation. 
-          Our team combines technical expertise with deep business understanding to deliver solutions that drive real results.
-        </IntroText>
-
-        <FeatureGrid
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {features.map((feature, index) => (
-            <FeatureCard
-              key={index}
-              variants={fadeInUp}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
+        <HeroContainer>
+          <motion.div style={{ y }}>
+            <HeroTitle
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <FeatureIcon
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+              Transform Your Business
+              <br />
+              with Expert Solutions
+            </HeroTitle>
+            
+            <HeroSubtitle
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              We build custom software, automate processes, and manage finances 
+              for forward-thinking companies ready to scale.
+            </HeroSubtitle>
+
+            <HeroActions
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <PrimaryButton
+                href="/contact"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                {feature.icon}
-              </FeatureIcon>
-              <FeatureTitle>{feature.title}</FeatureTitle>
-              <FeatureDescription>{feature.description}</FeatureDescription>
-            </FeatureCard>
-          ))}
-        </FeatureGrid>
-      </Section>
+                Start Your Project
+                <span>→</span>
+              </PrimaryButton>
+              
+              <SecondaryButton
+                href="/services"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Explore Services
+              </SecondaryButton>
+            </HeroActions>
 
-      <TestimonialsSection
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <div style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
-          <SectionTitle {...fadeInUp}>What Clients Say</SectionTitle>
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard
-              key={index}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+            <TrustIndicators
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.7 }}
+              transition={{ duration: 1, delay: 1 }}
             >
-              <TestimonialText>"{testimonial.text}"</TestimonialText>
-              <TestimonialAuthor>— {testimonial.author}</TestimonialAuthor>
-            </TestimonialCard>
-          ))}
-        </div>
+              <TrustItem>
+                <svg viewBox="0 0 20 20">
+                  <path d="M10 18L3 7h14l-7 11z"/>
+                </svg>
+                50+ Projects Delivered
+              </TrustItem>
+              <TrustItem>
+                <svg viewBox="0 0 20 20">
+                  <path d="M10 18L3 7h14l-7 11z"/>
+                </svg>
+                98% Client Satisfaction
+              </TrustItem>
+              <TrustItem>
+                <svg viewBox="0 0 20 20">
+                  <path d="M10 18L3 7h14l-7 11z"/>
+                </svg>
+                5+ Years Experience
+              </TrustItem>
+            </TrustIndicators>
+          </motion.div>
+        </HeroContainer>
+      </HeroSection>
+
+      <FeaturesSection ref={featuresRef}>
+        <FeaturesContainer>
+          <SectionHeader>
+            <SectionTitle
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+            >
+              Why Choose Arkly Solutions
+            </SectionTitle>
+            <SectionDescription
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              We combine technical excellence with business acumen to deliver 
+              solutions that don't just work—they transform how you operate.
+            </SectionDescription>
+          </SectionHeader>
+
+          <FeaturesGrid
+            variants={staggerContainer}
+            initial="initial"
+            animate={isInView ? "animate" : "initial"}
+          >
+            {features.map((feature, index) => (
+              <FeatureCard
+                key={index}
+                variants={scaleIn}
+                whileHover={{ scale: 1.02 }}
+              >
+                <FeatureIcon>
+                  {feature.icon}
+                </FeatureIcon>
+                <FeatureTitle>{feature.title}</FeatureTitle>
+                <FeatureDescription>{feature.description}</FeatureDescription>
+              </FeatureCard>
+            ))}
+          </FeaturesGrid>
+        </FeaturesContainer>
+      </FeaturesSection>
+
+      <TestimonialsSection>
+        <TestimonialsContainer>
+          <SectionTitle {...fadeInUp}>
+            Trusted by Growing Companies
+          </SectionTitle>
+          <SectionDescription {...fadeInUp}>
+            See how we've helped businesses streamline operations and accelerate growth.
+          </SectionDescription>
+
+          <TestimonialGrid
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {testimonials.map((testimonial, index) => (
+              <TestimonialCard
+                key={index}
+                variants={scaleIn}
+                whileHover={{ y: -5 }}
+              >
+                <TestimonialText>{testimonial.text}</TestimonialText>
+                <TestimonialAuthor>— {testimonial.author}</TestimonialAuthor>
+              </TestimonialCard>
+            ))}
+          </TestimonialGrid>
+        </TestimonialsContainer>
       </TestimonialsSection>
 
-      <PreviewSection
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <SectionTitle {...fadeInUp}>Explore More</SectionTitle>
-        <PreviewGrid
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {previews.map((preview, index) => (
-            <PreviewCard
-              key={index}
-              href={preview.link}
-              variants={fadeInUp}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
+      <CTASection>
+        <CTAContainer>
+          <CTATitle {...fadeInUp}>
+            Ready to Transform Your Business?
+          </CTATitle>
+          <CTADescription
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Let's discuss your project and create a custom solution that drives real results.
+          </CTADescription>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <PrimaryButton
+              href="/contact"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{ background: 'rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)' }}
             >
-              <PreviewIcon>{preview.icon}</PreviewIcon>
-              <PreviewTitle>{preview.title}</PreviewTitle>
-              <PreviewDescription>{preview.description}</PreviewDescription>
-              <PreviewButton>{preview.cta} →</PreviewButton>
-            </PreviewCard>
-          ))}
-        </PreviewGrid>
-      </PreviewSection>
-
-      <CTASection
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <CTATitle
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          Ready to Transform Your Business?
-        </CTATitle>
-        <CTAText
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          Let's discuss how our solutions can streamline your operations and accelerate your growth.
-        </CTAText>
-        <CTAButton
-          href="/contact"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.2 }}
-        >
-          Get Started Today
-        </CTAButton>
+              Get Started Today
+              <span>→</span>
+            </PrimaryButton>
+          </motion.div>
+        </CTAContainer>
       </CTASection>
     </PageLayout>
   )
