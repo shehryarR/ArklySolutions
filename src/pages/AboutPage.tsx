@@ -1,7 +1,14 @@
-import React, { useRef } from 'react'
+import  { useRef } from 'react'
 import styled from 'styled-components'
 import { motion, useInView } from 'framer-motion'
 import { PageLayout } from '../templates'
+import { 
+  Target, 
+  Handshake, 
+  Zap, 
+  Wrench,
+  Construction
+} from 'lucide-react'
 
 // Hero Section
 const HeroSection = styled(motion.section)`
@@ -232,16 +239,27 @@ const StoryVisual = styled(motion.div)`
 `
 
 const StoryIcon = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes['9xl']};
   position: relative;
   z-index: 1;
+  color: ${({ theme }) => theme.colors.primary.accent};
+
+  svg {
+    width: 120px;
+    height: 120px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: ${({ theme }) => theme.fontSizes['6xl']};
+    svg {
+      width: 100px;
+      height: 100px;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    font-size: ${({ theme }) => theme.fontSizes['5xl']};
+    svg {
+      width: 80px;
+      height: 80px;
+    }
   }
 `
 
@@ -370,22 +388,35 @@ const ValueIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: ${({ theme }) => theme.fontSizes['3xl']};
   margin: 0 auto ${({ theme }) => theme.spacing[6]} auto;
   box-shadow: ${({ theme }) => theme.shadows.md};
+  color: white;
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 70px;
     height: 70px;
-    font-size: ${({ theme }) => theme.fontSizes['2xl']};
     margin-bottom: ${({ theme }) => theme.spacing[4]};
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 60px;
     height: 60px;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
     margin-bottom: ${({ theme }) => theme.spacing[3]};
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 `
 
@@ -623,25 +654,25 @@ const scaleIn = {
   transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
 }
 
-// Data
+// Data with professional icons
 const values = [
   {
-    icon: "🎯",
+    icon: Target,
     title: "Results-Driven Excellence",
     description: "Every solution we build is designed with measurable outcomes in mind, focusing on ROI and tangible business impact."
   },
   {
-    icon: "🤝",
+    icon: Handshake,
     title: "True Partnership",
     description: "We don't just deliver projects—we become invested partners in your success, providing ongoing support and strategic guidance."
   },
   {
-    icon: "⚡",
+    icon: Zap,
     title: "Agile Innovation",
     description: "Rapid iteration, continuous improvement, and cutting-edge technologies ensure you stay ahead of the competition."
   },
   {
-    icon: "🔧",
+    icon: Wrench,
     title: "Technical Mastery",
     description: "Deep expertise across modern technologies, best practices, and industry standards guarantees robust, scalable solutions."
   }
@@ -669,7 +700,7 @@ const stats = [
   { number: "24/7", label: "Support Available" }
 ]
 
-const AboutPage: React.FC = () => {
+const AboutPage = () => {
   const storyRef = useRef(null)
   const valuesRef = useRef(null)
   const testimonialsRef = useRef(null)
@@ -735,7 +766,9 @@ const AboutPage: React.FC = () => {
             animate={isStoryInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <StoryIcon>🏗️</StoryIcon>
+            <StoryIcon>
+              <Construction />
+            </StoryIcon>
           </StoryVisual>
         </StoryContainer>
       </StorySection>
@@ -764,17 +797,22 @@ const AboutPage: React.FC = () => {
             initial="initial"
             animate={isValuesInView ? "animate" : "initial"}
           >
-            {values.map((value, index) => (
-              <ValueCard
-                key={index}
-                variants={scaleIn}
-                whileHover={{ scale: 1.02 }}
-              >
-                <ValueIcon>{value.icon}</ValueIcon>
-                <ValueTitle>{value.title}</ValueTitle>
-                <ValueDescription>{value.description}</ValueDescription>
-              </ValueCard>
-            ))}
+            {values.map((value, index) => {
+              const IconComponent = value.icon
+              return (
+                <ValueCard
+                  key={index}
+                  variants={scaleIn}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <ValueIcon>
+                    <IconComponent />
+                  </ValueIcon>
+                  <ValueTitle>{value.title}</ValueTitle>
+                  <ValueDescription>{value.description}</ValueDescription>
+                </ValueCard>
+              )
+            })}
           </ValuesGrid>
         </ValuesContainer>
       </ValuesSection>

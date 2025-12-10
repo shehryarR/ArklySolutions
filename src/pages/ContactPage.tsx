@@ -2,6 +2,13 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { PageLayout } from '../templates'
+import { 
+  Mail, 
+  Phone, 
+  Calendar, 
+  Clock,
+  Zap
+} from 'lucide-react'
 
 // Hero Section
 const HeroSection = styled(motion.section)`
@@ -224,20 +231,33 @@ const ContactIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
   flex-shrink: 0;
   box-shadow: ${({ theme }) => theme.shadows.sm};
+  color: white;
+
+  svg {
+    width: 28px;
+    height: 28px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 56px;
     height: 56px;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 48px;
     height: 48px;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `
 
@@ -538,9 +558,23 @@ const GuaranteeTitle = styled.h3`
   color: ${({ theme }) => theme.colors.primary.accent};
   margin-bottom: ${({ theme }) => theme.spacing[4]};
   font-family: ${({ theme }) => theme.fonts.heading};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing[2]};
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     margin-bottom: ${({ theme }) => theme.spacing[3]};
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 `
 
@@ -570,31 +604,31 @@ const scaleIn = {
   transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
 }
 
-// Data
+// Data with professional icons
 const contactData = [
   {
-    icon: "📧",
+    icon: Mail,
     label: "Email",
     text: "Ready to discuss your project?",
     link: "contact@arklysolutions.com",
     href: "mailto:contact@arklysolutions.com"
   },
   {
-    icon: "📞", 
+    icon: Phone, 
     label: "Phone",
     text: "Call us for immediate assistance",
     link: "(786) 548-8584",
     href: "tel:+17865488584"
   },
   {
-    icon: "🚀",
+    icon: Calendar,
     label: "Free Consultation",
     text: "Get expert advice at no cost",
     link: "Schedule a discovery call",
     href: "mailto:contact@arklysolutions.com?subject=Free Consultation Request"
   },
   {
-    icon: "⏰",
+    icon: Clock,
     label: "Response Time",
     text: "We typically respond within 24 hours",
     link: "Business Hours: 9 AM - 6 PM EST",
@@ -602,7 +636,7 @@ const contactData = [
   }
 ]
 
-const ContactPage: React.FC = () => {
+const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -612,7 +646,7 @@ const ContactPage: React.FC = () => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
     
@@ -689,26 +723,31 @@ const ContactPage: React.FC = () => {
               whileInView="animate"
               viewport={{ once: true }}
             >
-              {contactData.map((contact, index) => (
-                <ContactCard
-                  key={index}
-                  variants={scaleIn}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <ContactIcon>{contact.icon}</ContactIcon>
-                  <ContactDetails>
-                    <ContactLabel>{contact.label}</ContactLabel>
-                    <ContactText>{contact.text}</ContactText>
-                    {contact.href ? (
-                      <ContactLink href={contact.href}>{contact.link}</ContactLink>
-                    ) : (
-                      <ContactText style={{ fontWeight: 600, color: '#1a2332' }}>
-                        {contact.link}
-                      </ContactText>
-                    )}
-                  </ContactDetails>
-                </ContactCard>
-              ))}
+              {contactData.map((contact, index) => {
+                const IconComponent = contact.icon
+                return (
+                  <ContactCard
+                    key={index}
+                    variants={scaleIn}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <ContactIcon>
+                      <IconComponent />
+                    </ContactIcon>
+                    <ContactDetails>
+                      <ContactLabel>{contact.label}</ContactLabel>
+                      <ContactText>{contact.text}</ContactText>
+                      {contact.href ? (
+                        <ContactLink href={contact.href}>{contact.link}</ContactLink>
+                      ) : (
+                        <ContactText style={{ fontWeight: 600, color: '#1a2332' }}>
+                          {contact.link}
+                        </ContactText>
+                      )}
+                    </ContactDetails>
+                  </ContactCard>
+                )
+              })}
             </ContactInfo>
 
             <FormContainer
@@ -810,7 +849,10 @@ const ContactPage: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <GuaranteeTitle>⚡ 24-Hour Response Guarantee</GuaranteeTitle>
+              <GuaranteeTitle>
+                <Zap />
+                24-Hour Response Guarantee
+              </GuaranteeTitle>
               <GuaranteeText>
                 We understand your time is valuable. Every inquiry receives a personalized response within 24 hours during business days.
               </GuaranteeText>

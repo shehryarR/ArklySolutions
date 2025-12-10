@@ -1,7 +1,16 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
 import { motion, useInView } from 'framer-motion'
 import { PageLayout } from '../templates'
+import { 
+  Rocket, 
+  BarChart3, 
+  Zap, 
+  Target, 
+  TrendingUp, 
+  Shield,
+  Check
+} from 'lucide-react'
 
 // Hero Section
 const HeroSection = styled(motion.section)`
@@ -217,20 +226,33 @@ const ServiceIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: ${({ theme }) => theme.fontSizes['3xl']};
   box-shadow: ${({ theme }) => theme.shadows.md};
   flex-shrink: 0;
+  color: white;
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 70px;
     height: 70px;
-    font-size: ${({ theme }) => theme.fontSizes['2xl']};
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 60px;
     height: 60px;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 `
 
@@ -310,26 +332,26 @@ const ServiceFeatures = styled.ul`
 const ServiceFeature = styled.li`
   display: flex;
   align-items: flex-start;
-  gap: ${({ theme }) => theme.spacing[3]};
+  gap: ${({ theme }) => theme.spacing[2]};
   color: ${({ theme }) => theme.colors.neutral.gray[700]};
   font-size: ${({ theme }) => theme.fontSizes.base};
   line-height: 1.5;
-  
-  &::before {
-    content: '✓';
+
+  svg {
+    width: 16px;
+    height: 16px;
     color: ${({ theme }) => theme.colors.accent.emerald};
-    font-weight: ${({ theme }) => theme.fontWeights.bold};
-    font-size: ${({ theme }) => theme.fontSizes.lg};
     flex-shrink: 0;
     margin-top: 2px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     font-size: ${({ theme }) => theme.fontSizes.sm};
-    gap: ${({ theme }) => theme.spacing[2]};
+    gap: ${({ theme }) => theme.spacing[1.5]};
 
-    &::before {
-      font-size: ${({ theme }) => theme.fontSizes.base};
+    svg {
+      width: 14px;
+      height: 14px;
     }
   }
 `
@@ -487,10 +509,10 @@ const scaleIn = {
   transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
 }
 
-// Services data
+// Services data with professional icons
 const servicesData = [
   {
-    icon: "🚀",
+    icon: Rocket,
     title: "Custom Software Development",
     badge: "Most Popular",
     description: "Enterprise-grade applications built with modern technologies, designed to scale with your business growth and integrate seamlessly with existing systems.",
@@ -505,7 +527,7 @@ const servicesData = [
     ]
   },
   {
-    icon: "📊",
+    icon: BarChart3,
     title: "Financial Management & Analytics",
     badge: "Essential",
     description: "Comprehensive bookkeeping and financial intelligence solutions that provide crystal-clear insights into your business performance and growth opportunities.",
@@ -520,7 +542,7 @@ const servicesData = [
     ]
   },
   {
-    icon: "⚡",
+    icon: Zap,
     title: "Process Automation",
     badge: "High ROI",
     description: "Intelligent automation systems that eliminate manual work, reduce errors, and free up your team to focus on strategic initiatives that drive growth.",
@@ -535,7 +557,7 @@ const servicesData = [
     ]
   },
   {
-    icon: "🎯",
+    icon: Target,
     title: "Business & Technical Consulting",
     badge: "Strategic",
     description: "Expert guidance for digital transformation, operational efficiency, and technology strategy to help you make informed decisions and avoid costly mistakes.",
@@ -550,7 +572,7 @@ const servicesData = [
     ]
   },
   {
-    icon: "📈",
+    icon: TrendingUp,
     title: "Data & Analytics Solutions",
     badge: "Insights",
     description: "Transform your raw data into actionable insights with custom analytics platforms, real-time dashboards, and predictive modeling capabilities.",
@@ -565,7 +587,7 @@ const servicesData = [
     ]
   },
   {
-    icon: "🔒",
+    icon: Shield,
     title: "Security & Compliance",
     badge: "Protected",
     description: "Enterprise-grade security solutions and compliance frameworks that protect your data, ensure regulatory adherence, and build customer trust.",
@@ -581,7 +603,7 @@ const servicesData = [
   }
 ]
 
-const ServicesPage: React.FC = () => {
+const ServicesPage = () => {
   const servicesRef = useRef(null)
   const isInView = useInView(servicesRef, { once: true, margin: "-100px" })
 
@@ -619,53 +641,57 @@ const ServicesPage: React.FC = () => {
             initial="initial"
             animate={isInView ? "animate" : "initial"}
           >
-            {servicesData.map((service, index) => (
-              <ServiceCard
-                key={index}
-                variants={scaleIn}
-                whileHover={{ scale: 1.01 }}
-              >
-                <ServiceHeader>
-                  <ServiceIcon>
-                    {service.icon}
-                  </ServiceIcon>
-                  <ServiceTitleGroup>
-                    <ServiceTitle>{service.title}</ServiceTitle>
-                    <ServiceBadge>{service.badge}</ServiceBadge>
-                  </ServiceTitleGroup>
-                </ServiceHeader>
+            {servicesData.map((service, index) => {
+              const IconComponent = service.icon
+              return (
+                <ServiceCard
+                  key={index}
+                  variants={scaleIn}
+                  whileHover={{ scale: 1.01 }}
+                >
+                  <ServiceHeader>
+                    <ServiceIcon>
+                      <IconComponent />
+                    </ServiceIcon>
+                    <ServiceTitleGroup>
+                      <ServiceTitle>{service.title}</ServiceTitle>
+                      <ServiceBadge>{service.badge}</ServiceBadge>
+                    </ServiceTitleGroup>
+                  </ServiceHeader>
 
-                <ServiceDescription>
-                  {service.description}
-                </ServiceDescription>
+                  <ServiceDescription>
+                    {service.description}
+                  </ServiceDescription>
 
-                <ServiceFeatures>
-                  {service.features.map((feature, featureIndex) => (
-                    <ServiceFeature key={featureIndex}>
-                      {feature}
-                    </ServiceFeature>
-                  ))}
-                </ServiceFeatures>
+                  <ServiceFeatures>
+                    {service.features.map((feature, featureIndex) => (
+                      <ServiceFeature key={featureIndex}>
+                        <Check />
+                        {feature}
+                      </ServiceFeature>
+                    ))}
+                  </ServiceFeatures>
 
-                <ServiceActions>
-                  <PrimaryButton
-                    href="/contact"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Get Quote
-                    <span>→</span>
-                  </PrimaryButton>
-                  <SecondaryButton
-                    href="/about"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Learn More
-                  </SecondaryButton>
-                </ServiceActions>
-              </ServiceCard>
-            ))}
+                  <ServiceActions>
+                    <PrimaryButton
+                      href="/contact"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Get Quote
+                      <span>→</span>
+                    </PrimaryButton>
+                    <SecondaryButton
+                      href="/about"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Learn More
+                    </SecondaryButton>
+                  </ServiceActions>
+                </ServiceCard>
+              )
+            })}
           </ServicesGrid>
         </ServicesContainer>
       </ServicesSection>

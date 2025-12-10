@@ -1,6 +1,11 @@
-import React from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { 
+  Mail, 
+  Phone, 
+  Clock,
+  Globe
+} from 'lucide-react'
 
 const StyledFooter = styled.footer`
   background: ${({ theme }) => theme.colors.primary.dark};
@@ -246,19 +251,32 @@ const ContactIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: ${({ theme }) => theme.fontSizes.base};
   flex-shrink: 0;
+  color: ${({ theme }) => theme.colors.primary.accent};
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 28px;
     height: 28px;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 24px;
     height: 24px;
-    font-size: ${({ theme }) => theme.fontSizes.xs};
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 `
 
@@ -318,9 +336,13 @@ const SocialLink = styled(motion.a)`
   justify-content: center;
   color: ${({ theme }) => theme.colors.neutral.white};
   text-decoration: none;
-  font-size: ${({ theme }) => theme.fontSizes.lg};
   transition: all ${({ theme }) => theme.transitions.default};
   border: 1px solid rgba(255, 255, 255, 0.1);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary.accent};
@@ -331,13 +353,21 @@ const SocialLink = styled(motion.a)`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 36px;
     height: 36px;
-    font-size: ${({ theme }) => theme.fontSizes.base};
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 36px;
     height: 36px;
-    font-size: ${({ theme }) => theme.fontSizes.base};
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
 
     &:hover {
       transform: none;
@@ -345,7 +375,7 @@ const SocialLink = styled(motion.a)`
   }
 `
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <StyledFooter>
       <FooterContainer>
@@ -390,15 +420,21 @@ const Footer: React.FC = () => {
             </FooterDescription>
             <ContactInfo>
               <ContactItem>
-                <ContactIcon>📧</ContactIcon>
+                <ContactIcon>
+                  <Mail />
+                </ContactIcon>
                 <span>contact@arklysolutions.com</span>
               </ContactItem>
               <ContactItem>
-                <ContactIcon>📞</ContactIcon>
+                <ContactIcon>
+                  <Phone />
+                </ContactIcon>
                 <span>(786) 548-8584</span>
               </ContactItem>
               <ContactItem>
-                <ContactIcon>⏰</ContactIcon>
+                <ContactIcon>
+                  <Clock />
+                </ContactIcon>
                 <span>Mon-Fri: 9 AM - 6 PM EST</span>
               </ContactItem>
             </ContactInfo>
@@ -465,21 +501,21 @@ const Footer: React.FC = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              📧
+              <Mail />
             </SocialLink>
             <SocialLink
               href="https://arklysolutions.com"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              🌐
+              <Globe />
             </SocialLink>
             <SocialLink
               href="tel:+17865488584"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              📞
+              <Phone />
             </SocialLink>
           </SocialLinks>
         </FooterBottom>

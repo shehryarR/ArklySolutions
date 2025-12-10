@@ -1,7 +1,8 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import { PageLayout } from '../templates'
+import { Rocket, BarChart3, Zap, Shield, CheckCircle } from 'lucide-react'
 
 // Modern Hero Section with gradient mesh background
 const HeroSection = styled(motion.section)`
@@ -255,7 +256,7 @@ const TrustItem = styled.div`
   svg {
     width: 16px;
     height: 16px;
-    fill: ${({ theme }) => theme.colors.accent.emerald};
+    color: ${({ theme }) => theme.colors.accent.emerald};
     flex-shrink: 0;
   }
 
@@ -417,21 +418,34 @@ const FeatureIcon = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: ${({ theme }) => theme.spacing[6]};
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
   box-shadow: ${({ theme }) => theme.shadows.md};
+  color: white;
+
+  svg {
+    width: 28px;
+    height: 28px;
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 56px;
     height: 56px;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
     margin-bottom: ${({ theme }) => theme.spacing[4]};
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 48px;
     height: 48px;
-    font-size: ${({ theme }) => theme.fontSizes.lg};
     margin-bottom: ${({ theme }) => theme.spacing[3]};
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `
 
@@ -657,25 +671,25 @@ const scaleIn = {
   transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
 }
 
-// Data
+// Data with professional icons
 const features = [
   {
-    icon: "🚀",
+    icon: Rocket,
     title: "Custom Software Development",
     description: "Enterprise-grade applications built with cutting-edge technologies, designed to scale with your business growth and evolving requirements."
   },
   {
-    icon: "📊",
+    icon: BarChart3,
     title: "Financial Management & Analytics",
     description: "Comprehensive bookkeeping, financial reporting, and business intelligence solutions that provide deep insights into your performance."
   },
   {
-    icon: "⚡",
+    icon: Zap,
     title: "Process Automation",
     description: "Intelligent automation systems that eliminate manual work, reduce errors, and free up your team to focus on strategic initiatives."
   },
   {
-    icon: "🔒",
+    icon: Shield,
     title: "Security & Compliance",
     description: "Bank-level security protocols and industry compliance frameworks to protect your data and ensure regulatory adherence."
   }
@@ -692,7 +706,7 @@ const testimonials = [
   }
 ]
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   const heroRef = useRef(null)
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 500], [0, -150])
@@ -758,21 +772,15 @@ const HomePage: React.FC = () => {
               transition={{ duration: 1, delay: 1 }}
             >
               <TrustItem>
-                <svg viewBox="0 0 20 20">
-                  <path d="M10 18L3 7h14l-7 11z"/>
-                </svg>
+                <CheckCircle />
                 50+ Projects Delivered
               </TrustItem>
               <TrustItem>
-                <svg viewBox="0 0 20 20">
-                  <path d="M10 18L3 7h14l-7 11z"/>
-                </svg>
+                <CheckCircle />
                 98% Client Satisfaction
               </TrustItem>
               <TrustItem>
-                <svg viewBox="0 0 20 20">
-                  <path d="M10 18L3 7h14l-7 11z"/>
-                </svg>
+                <CheckCircle />
                 5+ Years Experience
               </TrustItem>
             </TrustIndicators>
@@ -805,19 +813,22 @@ const HomePage: React.FC = () => {
             initial="initial"
             animate={isInView ? "animate" : "initial"}
           >
-            {features.map((feature, index) => (
-              <FeatureCard
-                key={index}
-                variants={scaleIn}
-                whileHover={{ scale: 1.02 }}
-              >
-                <FeatureIcon>
-                  {feature.icon}
-                </FeatureIcon>
-                <FeatureTitle>{feature.title}</FeatureTitle>
-                <FeatureDescription>{feature.description}</FeatureDescription>
-              </FeatureCard>
-            ))}
+            {features.map((feature, index) => {
+              const IconComponent = feature.icon
+              return (
+                <FeatureCard
+                  key={index}
+                  variants={scaleIn}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <FeatureIcon>
+                    <IconComponent />
+                  </FeatureIcon>
+                  <FeatureTitle>{feature.title}</FeatureTitle>
+                  <FeatureDescription>{feature.description}</FeatureDescription>
+                </FeatureCard>
+              )
+            })}
           </FeaturesGrid>
         </FeaturesContainer>
       </FeaturesSection>
